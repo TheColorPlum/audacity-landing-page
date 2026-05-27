@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audacity Apprenticeships — Registered apprenticeship setup for industrial trades</title>
+<meta name="description" content="We set up DOL-registered apprenticeship programs for industrial trades companies in Colorado and Texas. Serving electrical, HVAC, mechanical, and plumbing businesses.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --oxblood: #701E28;
+    --oxblood-dim: #5a1820;
+    --oxblood-light: #f9e8eb;
+    --oxblood-faint: #fcf3f4;
+    --ink: #18181B;
+    --ink-soft: #404040;
+    --ink-faint: #6a6a6a;
+    --ink-faintest: #9a958f;
+    --line: #d8d4c8;
+    --line-soft: #ebe8de;
+    --paper: #ffffff;
+    --paper-warm: #f7f4ee;
+    --paper-warm-2: #f0ebde;
+    --green: #2d6a4f;
+    --grid: rgba(112, 30, 40, 0.05);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ─── Announcement bar ─── */
+  .announce-bar {
+    background: var(--oxblood);
+    color: var(--paper);
+    padding: 9px 0;
+    font-size: 13px;
+    text-align: center;
+  }
+  .announce-bar strong { font-weight: 600; }
+  .announce-bar a {
+    color: var(--paper);
+    text-decoration: underline;
+    margin-left: 8px;
+  }
+
+  /* ─── Header ─── */
+  header.site-header {
+    border-bottom: 1px solid var(--line);
+    padding: 16px 0;
+    background: var(--paper);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .brand-mark {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 28px;
+    color: var(--oxblood);
+    line-height: 1;
+  }
+  .brand-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 19px;
+    letter-spacing: -0.01em;
+  }
+  .brand-name-sub {
+    color: var(--ink-faint);
+    font-weight: 500;
+  }
+  .header-contact {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .header-phone {
+    text-align: right;
+  }
+  .header-phone-label {
+    display: block;
+    font-size: 11px;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+  }
+  .header-phone-number {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .header-phone-number:hover { color: var(--oxblood); }
+
+  /* ─── Buttons ─── */
+  .btn {
+    display: inline-block;
+    background: var(--oxblood);
+    color: var(--paper);
+    padding: 12px 22px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-family: inherit;
+  }
+  .btn:hover { background: var(--oxblood-dim); }
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--ink);
+  }
+  .btn-outline:hover { background: var(--ink); color: var(--paper); }
+  .btn-large { padding: 16px 32px; font-size: 16px; }
+
+  /* ─── Hero ─── */
+  .hero {
+    padding: 64px 0 56px;
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  /* Graph paper texture — borrowed from C, very subtle */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+  .hero > * { position: relative; z-index: 1; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  @media (max-width: 880px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    background: var(--oxblood-light);
+    color: var(--oxblood);
+    padding: 6px 12px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+  }
+  .hero-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: clamp(36px, 4.5vw, 52px);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+  .hero-title span { color: var(--oxblood); }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+    line-height: 1.55;
+  }
+  /* Pull-out "6-12 weeks" stat */
+  .hero-stat {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 12px;
+    background: var(--paper);
+    border: 1px solid var(--oxblood-light);
+    border-left: 3px solid var(--oxblood);
+    padding: 12px 18px;
+    border-radius: 3px;
+    margin-bottom: 28px;
+  }
+  .hero-stat-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 28px;
+    color: var(--oxblood);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .hero-stat-label {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .hero-cta-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .hero-bullets {
+    list-style: none;
+    padding: 0;
+  }
+  .hero-bullets li {
+    padding: 6px 0;
+    padding-left: 24px;
+    position: relative;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  .hero-bullets li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  /* Hero side card — quick-quote form */
+  .hero-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--oxblood);
+    border-radius: 4px;
+    padding: 28px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .hero-card h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+  .hero-card p {
+    font-size: 13px;
+    color: var(--ink-faint);
+    margin-bottom: 18px;
+  }
+  .hero-card .form-row { margin-bottom: 12px; }
+  .hero-card .form-row.row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .hero-card label {
+    display: block;
+    font-size: 11px;
+    color: var(--ink-faint);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+  .hero-card input, .hero-card select {
+    width: 100%;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--ink);
+    transition: border-color 0.15s;
+  }
+  .hero-card input:focus, .hero-card select:focus {
+    outline: none;
+    border-color: var(--oxblood);
+  }
+  .hero-card .btn {
+    width: 100%;
+    margin-top: 6px;
+  }
+  .hero-card-foot {
+    font-size: 12px;
+    color: var(--ink-faint);
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  /* ─── Trust strip — all stats now use red ─── */
+  .trust-strip {
+    padding: 36px 0;
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    text-align: center;
+  }
+  @media (max-width: 720px) {
+    .trust-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  }
+  .trust-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 36px;
+    color: var(--oxblood);
+    line-height: 1;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .trust-label {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+
+  /* ─── Sections ─── */
+  .section {
+    padding: 64px 0;
+  }
+  .section-alt {
+    background: var(--paper-warm);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  /* Graph paper on alt sections too, very subtle */
+  .section-alt {
+    position: relative;
+    overflow: hidden;
+  }
+  .section-alt::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+  .section-alt > * { position: relative; z-index: 1; }
+
+  .section-heading {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--oxblood);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: clamp(28px, 3.5vw, 38px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .section-sub {
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 580px;
+    margin: 0 auto;
+    line-height: 1.55;
+  }
+
+  /* ─── Fit / Audience (now moved up, just after trust strip) ─── */
+  .fit-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 720px) {
+    .fit-grid { grid-template-columns: 1fr; }
+  }
+  .fit-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 28px;
+  }
+  .fit-card-yes { border-left: 3px solid var(--green); }
+  .fit-card-no { border-left: 3px solid var(--ink-faintest); }
+  .fit-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .fit-card-yes .fit-eyebrow { color: var(--green); }
+  .fit-card-no .fit-eyebrow { color: var(--ink-faintest); }
+  .fit-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 20px;
+    letter-spacing: -0.015em;
+  }
+  .fit-list {
+    list-style: none;
+    padding: 0;
+  }
+  .fit-list li {
+    padding: 12px 0;
+    border-top: 1px solid var(--line-soft);
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .fit-list li:first-child { border-top: none; padding-top: 0; }
+  .fit-list strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ─── Services — simplified copy ─── */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 720px) {
+    .services-grid { grid-template-columns: 1fr; }
+  }
+  .service-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 28px;
+    transition: border-color 0.15s;
+    scroll-margin-top: 90px;
+  }
+  .service-card:hover { border-color: var(--oxblood); }
+  .service-num {
+    display: inline-block;
+    background: var(--oxblood-light);
+    color: var(--oxblood);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 32px;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+  .service-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+  .service-tagline {
+    font-size: 15px;
+    color: var(--oxblood);
+    font-weight: 500;
+    margin-bottom: 14px;
+    line-height: 1.45;
+  }
+  .service-body {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .service-body em.detail {
+    font-style: normal;
+    color: var(--ink-faint);
+    font-size: 13px;
+    display: block;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--line);
+  }
+
+  /* ─── How it works ─── */
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 880px) {
+    .how-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .how-grid { grid-template-columns: 1fr; }
+  }
+  .how-step {
+    text-align: left;
+  }
+  .how-step-num {
+    font-family: 'Fraunces', serif;
+    font-size: 38px;
+    color: var(--oxblood);
+    font-weight: 600;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .how-step-time {
+    font-size: 12px;
+    color: var(--oxblood);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .how-step-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .how-step-body {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* ─── FAQ ─── */
+  .faq {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  details.faq-item {
+    border-bottom: 1px solid var(--line);
+    padding: 20px 0;
+  }
+  details.faq-item summary {
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--ink);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    letter-spacing: -0.01em;
+  }
+  details.faq-item summary::-webkit-details-marker { display: none; }
+  details.faq-item summary::after {
+    content: '+';
+    color: var(--oxblood);
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  details.faq-item[open] summary::after { content: '−'; }
+  details.faq-item .faq-answer {
+    margin-top: 12px;
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ─── Big CTA ─── */
+  .big-cta {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 72px 0;
+    text-align: center;
+  }
+  .big-cta h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: clamp(28px, 3.5vw, 36px);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+    color: var(--paper);
+  }
+  .big-cta p {
+    font-size: 18px;
+    color: #b8b4ab;
+    margin-bottom: 32px;
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .big-cta-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .big-cta .btn-outline {
+    border-color: var(--paper);
+    color: var(--paper);
+  }
+  .big-cta .btn-outline:hover {
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  /* ─── Footer ─── */
+  footer.site-footer {
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+    padding: 48px 0 24px;
+    color: var(--ink-faint);
+    font-size: 14px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 700px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .footer-col h4 {
+    font-size: 13px;
+    text-transform: uppercase;
+    color: var(--ink);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+  .footer-col p, .footer-col a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    display: block;
+    padding: 3px 0;
+    font-size: 14px;
+  }
+  .footer-col a:hover { color: var(--oxblood); }
+  .footer-bottom {
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  @media (max-width: 600px) {
+    .footer-bottom { flex-direction: column; gap: 8px; }
+  }
+
+  .form-success-inline {
+    background: var(--paper-warm);
+    border: 1px solid var(--green);
+    padding: 20px;
+    border-radius: 4px;
+    text-align: center;
+    display: none;
+  }
+  .form-success-inline.show { display: block; }
+  .form-success-inline strong {
+    color: var(--green);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 15px;
+  }
+  .form-success-inline p {
+    color: var(--ink-soft);
+    font-size: 13px;
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- Announcement bar -->
+<div class="announce-bar">
+  <strong>Now accepting design partners</strong> for our 2026 cohort — limited to 3-5 companies.
+  <a href="#contact">Apply →</a>
+</div>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="container header-row">
+    <a href="#" class="brand">
+      <span class="brand-mark">A</span>
+      <span class="brand-name">Audacity <span class="brand-name-sub">Apprenticeships</span></span>
+    </a>
+    <div class="header-contact">
+      <div class="header-phone">
+        <span class="header-phone-label">Call us</span>
+        <a href="tel:+16092487950" class="header-phone-number">(609) 248-7950</a>
+      </div>
+      <a href="#contact" class="btn">Book a Time</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="hero-eyebrow">Serving CO &amp; TX trades</div>
+      <h1 class="hero-title">
+        DOL-Registered Apprenticeship Programs — <span>Built for Your Business.</span>
+      </h1>
+      <p class="hero-sub">
+        We handle the registration, the reporting, and the compliance — so you
+        can train your own pipeline without the paperwork eating your year.
+      </p>
+      <div class="hero-stat">
+        <span class="hero-stat-num">6–12 weeks</span>
+        <span class="hero-stat-label">From kickoff to your first registered apprentice</span>
+      </div>
+      <div class="hero-cta-row">
+        <a href="#contact" class="btn btn-large">Book a Time</a>
+        <a href="tel:+16092487950" class="btn btn-outline btn-large">Call (609) 248-7950</a>
+      </div>
+      <ul class="hero-bullets">
+        <li>For electrical, HVAC, mechanical &amp; plumbing</li>
+        <li>Built for businesses with 25-200 employees</li>
+        <li>First-year program operations included</li>
+        <li>One business day response, every time</li>
+      </ul>
+    </div>
+
+    <!-- Quick quote form -->
+    <div class="hero-card">
+      <h2>Free 20-min consultation</h2>
+      <p>Tell us a bit about your business. We'll respond within one business day.</p>
+      <form id="hero-form">
+        <div class="form-row">
+          <label>Your name</label>
+          <input type="text" name="firstName" required placeholder="First name">
+        </div>
+        <div class="form-row">
+          <label>Company</label>
+          <input type="text" name="company" required placeholder="Company name">
+        </div>
+        <div class="form-row">
+          <label>Email</label>
+          <input type="email" name="email" required placeholder="you@company.com">
+        </div>
+        <div class="form-row row-2">
+          <div>
+            <label>Phone</label>
+            <input type="tel" name="phone" placeholder="(303) ___-____">
+          </div>
+          <div>
+            <label>State</label>
+            <select name="state" required>
+              <option value="">Select</option>
+              <option value="CO">CO</option>
+              <option value="TX">TX</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn">Book a Time →</button>
+        <p class="hero-card-foot">No commitment. We'll respond within one business day.</p>
+      </form>
+      <div class="form-success-inline" id="hero-success">
+        <strong>✓ Got it.</strong>
+        <p>We'll be in touch within one business day.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Trust strip — all numbers now in oxblood -->
+<div class="trust-strip">
+  <div class="container">
+    <div class="trust-grid">
+      <div>
+        <div class="trust-num">92%</div>
+        <div class="trust-label">Apprentice retention<br>vs 55% non-apprentice (DOL)</div>
+      </div>
+      <div>
+        <div class="trust-num">6–12</div>
+        <div class="trust-label">Weeks from kickoff to your<br>first registered apprentice</div>
+      </div>
+      <div>
+        <div class="trust-num">144+</div>
+        <div class="trust-label">Hours of related instruction<br>we coordinate per apprentice/year</div>
+      </div>
+      <div>
+        <div class="trust-num">2</div>
+        <div class="trust-label">States we cover today —<br>Colorado &amp; Texas</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHO WE SERVE — MOVED UP -->
+<div class="section section-alt" id="fit">
+  <div class="container">
+    <div class="section-heading">
+      <div class="section-eyebrow">Is this for you?</div>
+      <h2 class="section-title">Built for mid-size industrial trades.</h2>
+      <p class="section-sub">
+        We say up front who we're built for — so you can decide if the rest of
+        this page is worth your time.
+      </p>
+    </div>
+    <div class="fit-grid">
+      <div class="fit-card fit-card-yes">
+        <div class="fit-eyebrow">✓ This is you</div>
+        <h3 class="fit-title">When we work well together.</h3>
+        <ul class="fit-list">
+          <li><strong>Trade:</strong> Electrical, HVAC, mechanical, plumbing, instrumentation, controls.</li>
+          <li><strong>Size:</strong> 25–200 employees.</li>
+          <li><strong>Work:</strong> Commercial &amp; industrial — data centers, healthcare, refineries, manufacturing, utility, government.</li>
+          <li><strong>Decision-maker:</strong> Owner or ops director. Already hiring apprentices informally, or actively considering it.</li>
+        </ul>
+      </div>
+      <div class="fit-card fit-card-no">
+        <div class="fit-eyebrow">✗ Probably not</div>
+        <h3 class="fit-title">When we're not the answer.</h3>
+        <ul class="fit-list">
+          <li><strong>National GCs</strong> with existing corporate training programs.</li>
+          <li><strong>Businesses under 5 employees</strong> — the paperwork doesn't pay back yet.</li>
+          <li><strong>Anyone wanting staffing services</strong> — we set up the program, you recruit and hire.</li>
+          <li><strong>Anyone needing apprentices on Monday</strong> — registration takes 6–12 weeks.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES — simplified copy -->
+<div class="section" id="services">
+  <div class="container">
+    <div class="section-heading">
+      <div class="section-eyebrow">What we handle</div>
+      <h2 class="section-title">The distracting parts of running a program.</h2>
+      <p class="section-sub">
+        Apprenticeship programs work. Setting them up is months of paperwork
+        nobody at your business has time for. We do that part.
+      </p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card" id="service-design">
+        <div class="service-num">1</div>
+        <h3 class="service-title">Program Design</h3>
+        <p class="service-tagline">We build your program around how your business actually runs.</p>
+        <p class="service-body">
+          Trade designation, term length, wage progression, on-the-job hours, and
+          training plan — written to match your work, not a template.
+          <em class="detail">Industry term: "apprenticeship standards"</em>
+        </p>
+      </div>
+      <div class="service-card" id="service-approval">
+        <div class="service-num">2</div>
+        <h3 class="service-title">DOL Approval</h3>
+        <p class="service-tagline">We file the paperwork and chase the responses. You stay on tools.</p>
+        <p class="service-body">
+          Submission to the right agency (federal or your state), back-and-forth
+          on clarifications, and shepherding through approval. Typically 4–8 weeks.
+          <em class="detail">Where we file: Office of Apprenticeship or State Apprenticeship Agency</em>
+        </p>
+      </div>
+      <div class="service-card" id="service-tracking">
+        <div class="service-num">3</div>
+        <h3 class="service-title">Apprentice Tracking</h3>
+        <p class="service-tagline">Every apprentice's hours, wages, and progress — kept current.</p>
+        <p class="service-body">
+          We register your apprentices in the federal database and keep their
+          records up to date. Quarterly check-ins to make sure what we report
+          matches what you ran.
+          <em class="detail">Federal system of record: RAPIDS</em>
+        </p>
+      </div>
+      <div class="service-card" id="service-compliance">
+        <div class="service-num">4</div>
+        <h3 class="service-title">Compliance &amp; Renewal</h3>
+        <p class="service-tagline">We keep the program in good standing year after year.</p>
+        <p class="service-body">
+          EEO documentation, apprentice-to-journeyman ratios, prevailing-wage
+          records for IRA and Davis-Bacon jobs, and the annual program review.
+          Nothing falls through.
+          <em class="detail">Bonus: documentation needed for IRA prevailing-wage tax credits</em>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- How it works -->
+<div class="section section-alt" id="process">
+  <div class="container">
+    <div class="section-heading">
+      <div class="section-eyebrow">How it works</div>
+      <h2 class="section-title">Four phases. Honest timelines.</h2>
+      <p class="section-sub">
+        We tell you 6-12 weeks because that's what it actually takes. No shortcuts,
+        no over-promising.
+      </p>
+    </div>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="how-step-num">01</div>
+        <div class="how-step-time">20 minutes</div>
+        <div class="how-step-title">Discovery Call</div>
+        <p class="how-step-body">
+          We learn how your business hires and trains today. You learn whether
+          registration is the right fit.
+        </p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">02</div>
+        <div class="how-step-time">2-3 weeks</div>
+        <div class="how-step-title">Program Design</div>
+        <p class="how-step-body">
+          We write your program standards around your trade, your wages, your
+          training. Reviewed with you before anything is submitted.
+        </p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">03</div>
+        <div class="how-step-time">4-8 weeks</div>
+        <div class="how-step-title">DOL Approval</div>
+        <p class="how-step-body">
+          We file. We respond to clarifications. You stay focused on running the
+          business. State approval timelines vary.
+        </p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">04</div>
+        <div class="how-step-time">Ongoing</div>
+        <div class="how-step-title">Operations</div>
+        <p class="how-step-body">
+          Apprentice registration, reporting, quarterly check-ins, annual review.
+          One year included in your fee.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+  <div class="container">
+    <div class="section-heading">
+      <div class="section-eyebrow">FAQs</div>
+      <h2 class="section-title">Questions we hear a lot.</h2>
+    </div>
+    <div class="faq">
+      <details class="faq-item">
+        <summary>What does it cost?</summary>
+        <div class="faq-answer">
+          One fixed number, quoted on the discovery call. It covers Phases 02-04 for the first twelve months — program design through your annual review. No hourly billing, no surprise invoices. We tell you the number before you commit to anything.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>Why not just do this ourselves?</summary>
+        <div class="faq-answer">
+          You can. It's feasible if you have a dedicated HR or compliance person with time. We've seen businesses do it well. We've also seen it run for two years and stall because the operations team kept getting pulled to actual fires. The question is where your team's attention is most valuable.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>Do you place apprentices for us?</summary>
+        <div class="faq-answer">
+          No. We're not a staffing agency. We set up the program, run the compliance and reporting, and advise on selection and technical-school partnerships. The apprentices are your employees — recruiting and hiring stay with you.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>How does this help with IRA / prevailing-wage work?</summary>
+        <div class="faq-answer">
+          Inflation Reduction Act-funded projects that meet prevailing-wage and apprenticeship requirements unlock significantly higher tax credits. Davis-Bacon jobs require certified payroll and may require apprenticeship participation. Having a registered program makes you eligible — and provides the documentation to claim those bonuses cleanly.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>What's a "design partner" cohort?</summary>
+        <div class="faq-answer">
+          We work with 3-5 trades companies at a time during this early phase. They get materially reduced fees in exchange for working with us to shape the product around how their businesses actually operate. We're not trying to onboard hundreds of clients — we're doing this work well for a small number of partners.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>What states do you operate in?</summary>
+        <div class="faq-answer">
+          Colorado and Texas today. We chose these states deliberately — Colorado has an active State Apprenticeship Agency with established processes, and Texas has the federal Office of Apprenticeship pathway plus the largest industrial construction demand in the country right now. We'll expand as we find the right design partners elsewhere.
+        </div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<!-- Big CTA -->
+<div class="big-cta" id="contact">
+  <div class="container">
+    <h2>Ready to talk?</h2>
+    <p>
+      A 20-minute call. We tell you whether this makes sense for your business
+      and whether we're the right partner. No deck, no sales pitch.
+    </p>
+    <div class="big-cta-row">
+      <a href="#" onclick="document.querySelector('input[name=firstName]').focus(); return false;" class="btn btn-large">Book a Time ↑</a>
+      <a href="tel:+16092487950" class="btn btn-outline btn-large">Call (609) 248-7950</a>
+      <a href="mailto:pelumi@withaudacity.com" class="btn btn-outline btn-large">Email Us</a>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="#" class="brand" style="margin-bottom: 12px;">
+          <span class="brand-mark">A</span>
+          <span class="brand-name">Audacity <span class="brand-name-sub">Apprenticeships</span></span>
+        </a>
+        <p style="margin-top: 12px;">DOL-registered apprenticeship programs for industrial trades businesses in Colorado and Texas.</p>
+      </div>
+      <div class="footer-col">
+        <h4>What we do</h4>
+        <a href="#service-design">Program Design</a>
+        <a href="#service-approval">DOL Approval</a>
+        <a href="#service-tracking">Apprentice Tracking</a>
+        <a href="#service-compliance">Compliance</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#fit">Who it's for</a>
+        <a href="#process">How it works</a>
+        <a href="#contact">Contact</a>
+        <a href="mailto:pelumi@withaudacity.com">Email</a>
+      </div>
+      <div class="footer-col">
+        <h4>Coverage</h4>
+        <p>Colorado<br>Texas</p>
+        <h4 style="margin-top:16px;">Hours</h4>
+        <p>Mon-Fri, 8am-5pm MT</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Audacity Apprenticeships</span>
+      <span>withaudacity.com · pelumi@withaudacity.com</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const form = document.getElementById('hero-form');
+  const success = document.getElementById('hero-success');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form));
+    const body = `New inquiry from withaudacity.com:
+
+Name: ${data.firstName}
+Company: ${data.company}
+Email: ${data.email}
+Phone: ${data.phone || '—'}
+State: ${data.state}`;
+    const subject = `New inquiry — ${data.company} (${data.state})`;
+    const mailto = `mailto:pelumi@withaudacity.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    form.style.display = 'none';
+    success.classList.add('show');
+    window.location.href = mailto;
+  });
+</script>
+
+</body>
+</html>
