@@ -1071,21 +1071,27 @@
 <script>
   const form = document.getElementById('hero-form');
   const success = document.getElementById('hero-success');
-  form.addEventListener('submit', (e) => {
+  const submitBtn = form.querySelector('button[type="submit"]');
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(form));
-    const body = `New inquiry from withaudacity.com:
-
-Name: ${data.firstName}
-Company: ${data.company}
-Email: ${data.email}
-Phone: ${data.phone || '—'}
-State: ${data.state}`;
-    const subject = `New inquiry — ${data.company} (${data.state})`;
-    const mailto = `mailto:pelumi@withaudacity.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    form.style.display = 'none';
-    success.classList.add('show');
-    window.location.href = mailto;
+    const originalText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error('Request failed');
+      form.style.display = 'none';
+      success.classList.add('show');
+    } catch (err) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+      alert("Sorry — something went wrong sending your message. Please email pelumi@withaudacity.com or call (609) 248-7950.");
+    }
   });
 </script>
 
