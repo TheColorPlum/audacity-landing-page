@@ -105,8 +105,17 @@ function renderHtml({ firstName, company, email, phone, state }) {
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td style="vertical-align:middle;">
-                    <span style="font-family:${serif};font-weight:600;font-size:28px;color:${oxblood};line-height:1;display:inline-block;vertical-align:middle;margin-right:10px;">A</span>
-                    <span style="font-family:${serif};font-weight:600;font-size:18px;color:${ink};letter-spacing:-0.01em;vertical-align:middle;">Audacity <span style="color:${inkFaint};font-weight:500;">Apprenticeships</span></span>
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="vertical-align:middle;padding-right:12px;">
+                          <span style="font-family:${serif};font-weight:600;font-size:40px;color:${oxblood};line-height:1;display:inline-block;">A</span>
+                        </td>
+                        <td style="vertical-align:middle;line-height:1;">
+                          <div style="font-family:${serif};font-weight:600;font-size:20px;color:${ink};letter-spacing:-0.01em;line-height:1;">Audacity</div>
+                          <div style="font-family:${sans};font-size:10px;font-weight:500;color:${inkFaint};letter-spacing:0.18em;text-transform:uppercase;line-height:1;margin-top:4px;">Apprenticeships</div>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
                   <td align="right" style="vertical-align:middle;">
                     <span style="display:inline-block;background:${oxbloodLight};color:${oxblood};padding:5px 10px;border-radius:3px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">New inquiry</span>

@@ -75,27 +75,38 @@
   }
   .brand {
     display: flex;
-    align-items: baseline;
-    gap: 10px;
+    align-items: center;
+    gap: 14px;
     text-decoration: none;
     color: var(--ink);
   }
   .brand-mark {
     font-family: 'Fraunces', serif;
     font-weight: 600;
-    font-size: 28px;
+    font-size: 44px;
     color: var(--oxblood);
     line-height: 1;
   }
   .brand-name {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    line-height: 1;
+  }
+  .brand-name-main {
     font-family: 'Fraunces', serif;
     font-weight: 600;
-    font-size: 19px;
+    font-size: 22px;
     letter-spacing: -0.01em;
+    color: var(--ink);
   }
   .brand-name-sub {
-    color: var(--ink-faint);
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
     font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
   }
   .header-contact {
     display: flex;
@@ -712,7 +723,10 @@
   <div class="container header-row">
     <a href="#" class="brand">
       <span class="brand-mark">A</span>
-      <span class="brand-name">Audacity <span class="brand-name-sub">Apprenticeships</span></span>
+      <span class="brand-name">
+        <span class="brand-name-main">Audacity</span>
+        <span class="brand-name-sub">Apprenticeships</span>
+      </span>
     </a>
     <div class="header-contact">
       <div class="header-phone">
@@ -1036,7 +1050,10 @@
       <div class="footer-col">
         <a href="#" class="brand" style="margin-bottom: 12px;">
           <span class="brand-mark">A</span>
-          <span class="brand-name">Audacity <span class="brand-name-sub">Apprenticeships</span></span>
+          <span class="brand-name">
+            <span class="brand-name-main">Audacity</span>
+            <span class="brand-name-sub">Apprenticeships</span>
+          </span>
         </a>
         <p style="margin-top: 12px;">DOL-registered apprenticeship programs for industrial trades businesses in Colorado and Texas.</p>
       </div>
