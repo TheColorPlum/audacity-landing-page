@@ -35,7 +35,7 @@ State: ${state}`;
       },
       body: JSON.stringify({
         from: 'Audacity Apprenticeships <noreply@withaudacity.com>',
-        to: ['rachel@withaudacity.com'],
+        to: ['hello@withaudacity.com'],
         reply_to: email,
         subject,
         text,
