@@ -3,724 +3,834 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Audacity Apprenticeships — Registered apprenticeship setup for industrial trades</title>
-<meta name="description" content="We set up DOL-registered apprenticeship programs for industrial trades companies in Colorado and Texas. Serving electrical, HVAC, mechanical, and plumbing businesses.">
+<title>Audacity Apprenticeships / Autonomous operations</title>
+<meta name="description" content="We set up DOL-registered apprenticeship programs for industrial trades companies nationwide. Serving electrical, HVAC, mechanical, and plumbing businesses.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:ital,wght@0,500;0,600;1,500&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;450;500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
+    /* palette / from identity system v.01 */
     --oxblood: #701E28;
-    --oxblood-dim: #5a1820;
-    --oxblood-light: #f9e8eb;
-    --oxblood-faint: #fcf3f4;
+    --oxblood-deep: #5A1820;
+    --carbon: #18181B;
+    --working: #F7F4EE;      /* ground */
+    --working-2: #F1EDE4;
+    --paper: #F7F4EE;
+    --panel: #FBFAF5;
     --ink: #18181B;
-    --ink-soft: #404040;
-    --ink-faint: #6a6a6a;
-    --ink-faintest: #9a958f;
-    --line: #d8d4c8;
-    --line-soft: #ebe8de;
-    --paper: #ffffff;
-    --paper-warm: #f7f4ee;
-    --paper-warm-2: #f0ebde;
-    --green: #2d6a4f;
-    --grid: rgba(112, 30, 40, 0.05);
+    --ink-70: #4A4A4D;
+    --ink-50: #74726E;
+    --ink-35: #9C9A94;
+    --rule: #DBD6CA;         /* thin divider lines */
+    --rule-strong: #C7C1B3;
+    --ox-tint: rgba(112,30,40,0.07);
+    --state-green: #4E5D3A;  /* completed / approved, muted olive to sit with oxblood */
+    --state-amber: #8A6A1F;  /* processing */
+    --ink-deep: #1F0A0D;     /* dark oxblood, Solutions section bg */
+    --oxblood-soft: #C98A6E; /* oxblood accent on dark */
+    --cream-62: rgba(247,244,238,0.62);
+    --cream-42: rgba(247,244,238,0.42);
+    --disp: 'Fraunces', Georgia, serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --body: 'Inter', system-ui, sans-serif;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
+
   body {
     background: var(--paper);
     color: var(--ink);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 16px;
-    line-height: 1.55;
+    font-family: var(--body);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+  ::selection { background: rgba(112,30,40,0.14); }
+
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 38px; }
+
+  /* monospace utility labels */
+  .mono {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-50);
   }
 
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 24px;
+  /* ---------- SHEET FRAME (blueprint registration) ---------- */
+  .sheet-frame {
+    position: fixed;
+    inset: 14px;
+    border: 1px solid var(--rule);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .reg { position: fixed; width: 11px; height: 11px; z-index: 2; pointer-events: none; }
+  .reg::before, .reg::after { content: ""; position: absolute; background: var(--oxblood); }
+  .reg::before { width: 11px; height: 1px; top: 5px; }
+  .reg::after { width: 1px; height: 11px; left: 5px; }
+  .reg.tl { top: 9px; left: 9px; } .reg.tr { top: 9px; right: 9px; }
+  .reg.bl { bottom: 9px; left: 9px; } .reg.br { bottom: 9px; right: 9px; }
+
+  /* ---------- RUNNING HEADER ---------- */
+  /* announcement banner */
+  .banner {
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    background: var(--oxblood); color: var(--working);
+    padding: 9px 24px; text-decoration: none;
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.02em;
+    position: relative; z-index: 60;
+    width: 100%; border: none; cursor: pointer;
+    transition: background .2s ease;
+  }
+  .banner:hover { background: var(--oxblood-deep); }
+  .banner-text { color: rgba(247,244,238,0.88); }
+  .banner-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--working); font-weight: 500;
+  }
+  .banner-cta svg { transition: transform .2s ease; }
+  .banner:hover .banner-cta svg { transform: translateX(3px); }
+  @media (max-width: 600px) {
+    .banner { font-size: 10.5px; gap: 8px; padding: 8px 16px; text-align: center; }
+    .banner-text { display: inline; }
   }
 
-  /* ─── Announcement bar ─── */
-  .announce-bar {
-    background: var(--oxblood);
-    color: var(--paper);
-    padding: 9px 0;
-    font-size: 13px;
-    text-align: center;
+  .runhead {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(247,244,238,0.86);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .35s ease;
   }
-  .announce-bar strong { font-weight: 600; }
-  .announce-bar a {
-    color: var(--paper);
-    text-decoration: underline;
-    margin-left: 8px;
-  }
-
-  /* ─── Header ─── */
-  header.site-header {
-    border-bottom: 1px solid var(--line);
-    padding: 16px 0;
-    background: var(--paper);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  .header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 24px;
+  .runhead.scrolled { border-bottom: 1px solid var(--rule); }
+  .runhead-inner {
+    height: 62px; display: flex; align-items: center; justify-content: space-between;
   }
   .brand {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    text-decoration: none;
-    color: var(--ink);
+    display: flex; align-items: center; gap: 14px;
+    text-decoration: none; color: var(--ink);
   }
   .brand-mark {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 44px;
-    color: var(--oxblood);
-    line-height: 1;
+    font-family: 'Fraunces', serif; font-weight: 600; font-size: 44px;
+    color: var(--oxblood); line-height: 1;
   }
   .brand-name {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    line-height: 1;
+    display: flex; flex-direction: column; gap: 2px; line-height: 1;
   }
   .brand-name-main {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 22px;
-    letter-spacing: -0.01em;
-    color: var(--ink);
+    font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px;
+    letter-spacing: -0.01em; color: var(--ink);
   }
   .brand-name-sub {
-    font-family: 'Inter', sans-serif;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
+    font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-50);
   }
-  .header-contact {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+  .nav-right { display: flex; align-items: center; gap: 34px; }
+  .nav-right a.navlink {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-70); text-decoration: none;
+    transition: color .2s;
   }
-  .header-phone {
-    text-align: right;
+  .nav-right a.navlink:hover { color: var(--oxblood); }
+  .nav-cta {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--working); background: var(--oxblood);
+    padding: 10px 18px; border-radius: 6px; text-decoration: none;
+    border: none; cursor: pointer;
+    transition: background .2s;
   }
-  .header-phone-label {
-    display: block;
-    font-size: 11px;
-    color: var(--ink-faint);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 2px;
-  }
-  .header-phone-number {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--ink);
-    text-decoration: none;
-  }
-  .header-phone-number:hover { color: var(--oxblood); }
+  .nav-cta:hover { background: var(--oxblood-deep); }
 
-  /* ─── Buttons ─── */
-  .btn {
-    display: inline-block;
-    background: var(--oxblood);
-    color: var(--paper);
-    padding: 12px 22px;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 14px;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: background 0.15s;
-    font-family: inherit;
-  }
-  .btn:hover { background: var(--oxblood-dim); }
-  .btn-outline {
-    background: transparent;
-    color: var(--ink);
-    border: 1.5px solid var(--ink);
-  }
-  .btn-outline:hover { background: var(--ink); color: var(--paper); }
-  .btn-large { padding: 16px 32px; font-size: 16px; }
-
-  /* ─── Hero ─── */
+  /* ---------- HERO ---------- */
   .hero {
-    padding: 64px 0 56px;
-    background: var(--paper-warm);
-    border-bottom: 1px solid var(--line);
+    display: grid; grid-template-columns: 1fr 1.04fr; gap: 56px;
+    align-items: stretch; padding: 56px 0 64px;
     position: relative;
-    overflow: hidden;
   }
-  /* Graph paper texture — borrowed from C, very subtle */
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(var(--grid) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-    background-size: 32px 32px;
-    pointer-events: none;
+  /* spec label row above hero */
+  .specrow {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 0 30px; border-bottom: 1px solid var(--rule);
+    margin-bottom: 44px;
   }
-  .hero > * { position: relative; z-index: 1; }
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 64px;
-    align-items: center;
-  }
-  @media (max-width: 880px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
-  }
-  .hero-eyebrow {
-    display: inline-block;
-    background: var(--oxblood-light);
-    color: var(--oxblood);
-    padding: 6px 12px;
-    border-radius: 3px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 20px;
-  }
-  .hero-title {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: clamp(36px, 4.5vw, 52px);
-    line-height: 1.1;
-    letter-spacing: -0.025em;
-    color: var(--ink);
-    margin-bottom: 20px;
-  }
-  .hero-title span { color: var(--oxblood); }
-  .hero-sub {
-    font-size: 18px;
-    color: var(--ink-soft);
-    margin-bottom: 24px;
-    line-height: 1.55;
-  }
-  /* Pull-out "6-12 weeks" stat */
-  .hero-stat {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 12px;
-    background: var(--paper);
-    border: 1px solid var(--oxblood-light);
-    border-left: 3px solid var(--oxblood);
-    padding: 12px 18px;
-    border-radius: 3px;
-    margin-bottom: 28px;
-  }
-  .hero-stat-num {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 28px;
-    color: var(--oxblood);
-    line-height: 1;
-    letter-spacing: -0.02em;
-  }
-  .hero-stat-label {
-    font-size: 13px;
-    color: var(--ink-soft);
-    font-weight: 500;
-    line-height: 1.3;
-  }
-  .hero-cta-row {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 32px;
-  }
-  .hero-bullets {
-    list-style: none;
-    padding: 0;
-  }
-  .hero-bullets li {
-    padding: 6px 0;
-    padding-left: 24px;
-    position: relative;
-    font-size: 15px;
-    color: var(--ink-soft);
-  }
-  .hero-bullets li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: var(--green);
-    font-weight: 700;
-  }
+  .specrow .left { display: flex; align-items: baseline; gap: 18px; }
+  .specrow .figtag { color: var(--oxblood); }
 
-  /* Hero side card — quick-quote form */
-  .hero-card {
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-top: 4px solid var(--oxblood);
-    border-radius: 4px;
-    padding: 28px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  .hero-left { display: flex; flex-direction: column; padding-top: 8px; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--oxblood);
+    display: inline-flex; align-items: center; gap: 10px; margin-bottom: 30px;
   }
-  .hero-card h2 {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 4px;
-    color: var(--ink);
-    letter-spacing: -0.015em;
-  }
-  .hero-card p {
-    font-size: 13px;
-    color: var(--ink-faint);
-    margin-bottom: 18px;
-  }
-  .hero-card .form-row { margin-bottom: 12px; }
-  .hero-card .form-row.row-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-  .hero-card label {
-    display: block;
-    font-size: 11px;
-    color: var(--ink-faint);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 4px;
-  }
-  .hero-card input, .hero-card select {
-    width: 100%;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 10px 12px;
-    font-size: 14px;
-    font-family: inherit;
-    color: var(--ink);
-    transition: border-color 0.15s;
-  }
-  .hero-card input:focus, .hero-card select:focus {
-    outline: none;
-    border-color: var(--oxblood);
-  }
-  .hero-card .btn {
-    width: 100%;
-    margin-top: 6px;
-  }
-  .hero-card-foot {
-    font-size: 12px;
-    color: var(--ink-faint);
-    margin-top: 12px;
-    text-align: center;
-  }
-
-  /* ─── Trust strip — all stats now use red ─── */
-  .trust-strip {
-    padding: 36px 0;
-    border-bottom: 1px solid var(--line);
-    background: var(--paper);
-  }
-  .trust-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 32px;
-    text-align: center;
-  }
-  @media (max-width: 720px) {
-    .trust-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-  }
-  .trust-num {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 36px;
-    color: var(--oxblood);
-    line-height: 1;
-    margin-bottom: 8px;
-    letter-spacing: -0.02em;
-  }
-  .trust-label {
-    font-size: 13px;
-    color: var(--ink-soft);
-    line-height: 1.45;
-  }
-
-  /* ─── Sections ─── */
-  .section {
-    padding: 64px 0;
-  }
-  .section-alt {
-    background: var(--paper-warm);
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-  }
-  /* Graph paper on alt sections too, very subtle */
-  .section-alt {
-    position: relative;
-    overflow: hidden;
-  }
-  .section-alt::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(var(--grid) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-    background-size: 32px 32px;
-    pointer-events: none;
-  }
-  .section-alt > * { position: relative; z-index: 1; }
-
-  .section-heading {
-    text-align: center;
-    margin-bottom: 48px;
-  }
-  .section-eyebrow {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--oxblood);
-    margin-bottom: 12px;
-  }
-  .section-title {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: clamp(28px, 3.5vw, 38px);
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin-bottom: 12px;
-  }
-  .section-sub {
-    font-size: 17px;
-    color: var(--ink-soft);
-    max-width: 580px;
-    margin: 0 auto;
-    line-height: 1.55;
-  }
-
-  /* ─── Fit / Audience (now moved up, just after trust strip) ─── */
-  .fit-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-  @media (max-width: 720px) {
-    .fit-grid { grid-template-columns: 1fr; }
-  }
-  .fit-card {
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 28px;
-  }
-  .fit-card-yes { border-left: 3px solid var(--green); }
-  .fit-card-no { border-left: 3px solid var(--ink-faintest); }
-  .fit-eyebrow {
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 10px;
-  }
-  .fit-card-yes .fit-eyebrow { color: var(--green); }
-  .fit-card-no .fit-eyebrow { color: var(--ink-faintest); }
-  .fit-title {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 20px;
-    letter-spacing: -0.015em;
-  }
-  .fit-list {
-    list-style: none;
-    padding: 0;
-  }
-  .fit-list li {
-    padding: 12px 0;
-    border-top: 1px solid var(--line-soft);
-    font-size: 15px;
-    color: var(--ink-soft);
-    line-height: 1.5;
-  }
-  .fit-list li:first-child { border-top: none; padding-top: 0; }
-  .fit-list strong {
-    color: var(--ink);
-    font-weight: 600;
-  }
-
-  /* ─── Services — simplified copy ─── */
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-  @media (max-width: 720px) {
-    .services-grid { grid-template-columns: 1fr; }
-  }
-  .service-card {
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 28px;
-    transition: border-color 0.15s;
-    scroll-margin-top: 90px;
-  }
-  .service-card:hover { border-color: var(--oxblood); }
-  .service-num {
-    display: inline-block;
-    background: var(--oxblood-light);
-    color: var(--oxblood);
-    width: 32px;
-    height: 32px;
+  .eyebrow::before {
+    content: ""; width: 5px; height: 5px; background: var(--oxblood);
     border-radius: 50%;
-    text-align: center;
-    line-height: 32px;
-    font-weight: 700;
-    font-size: 14px;
-    margin-bottom: 16px;
+    animation: livepulse 2.4s infinite;
   }
-  .service-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 6px;
-    color: var(--ink);
-    letter-spacing: -0.015em;
+  @keyframes livepulse {
+    0% { box-shadow: 0 0 0 0 rgba(112,30,40,0.4); }
+    70% { box-shadow: 0 0 0 6px rgba(112,30,40,0); }
+    100% { box-shadow: 0 0 0 0 rgba(112,30,40,0); }
   }
-  .service-tagline {
-    font-size: 15px;
-    color: var(--oxblood);
-    font-weight: 500;
-    margin-bottom: 14px;
-    line-height: 1.45;
+  h1 {
+    font-family: var(--disp); font-weight: 400;
+    font-size: clamp(46px, 5.4vw, 78px); line-height: 0.98;
+    letter-spacing: -0.025em; color: var(--ink); margin-bottom: 30px;
   }
-  .service-body {
-    font-size: 14px;
-    color: var(--ink-soft);
-    line-height: 1.6;
+  h1 em { font-style: italic; font-weight: 400; color: var(--oxblood); }
+  .lede {
+    font-size: 17px; line-height: 1.62; color: var(--ink-70);
+    max-width: 430px; margin-bottom: 22px;
   }
-  .service-body em.detail {
-    font-style: normal;
-    color: var(--ink-faint);
-    font-size: 13px;
-    display: block;
-    margin-top: 8px;
-    padding-top: 8px;
-    border-top: 1px dashed var(--line);
+  .principle {
+    font-family: var(--body); font-size: 16px; font-weight: 450;
+    color: var(--ink); max-width: 430px; margin-bottom: 38px;
+    line-height: 1.55;
   }
+  .cta-row { display: flex; align-items: center; gap: 14px; margin-top: auto; }
+  .btn-primary {
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;
+    background: var(--oxblood); color: var(--working);
+    padding: 16px 30px; border-radius: 6px; text-decoration: none;
+    border: none; cursor: pointer;
+    box-shadow: 0 1px 2px rgba(112,30,40,0.18), 0 6px 18px rgba(112,30,40,0.16);
+    transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+  }
+  .btn-primary:hover { background: var(--oxblood-deep); transform: translateY(-1px); box-shadow: 0 2px 4px rgba(112,30,40,0.2), 0 10px 24px rgba(112,30,40,0.2); }
+  .btn-ghost {
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--ink); padding: 16px 24px; text-decoration: none;
+    background: none; border: 1px solid var(--ink); border-radius: 6px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 9px;
+    transition: gap .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .btn-ghost:hover { gap: 14px; color: var(--oxblood); border-color: var(--oxblood); }
 
-  /* ─── How it works ─── */
-  .how-grid {
+  /* ---------- CONSOLE: framed figure, not a card ---------- */
+  .console-figure { display: flex; flex-direction: column; }
+  .fig-caption {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding-bottom: 9px; margin-bottom: 0;
+  }
+  .fig-caption .figtag { color: var(--oxblood); }
+
+  /* command-center shell: product frame bleeding off the right edge */
+  .shell {
+    position: relative;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    grid-template-columns: 52px 1fr 240px;
+    background: var(--panel);
+    border: 1px solid var(--rule-strong);
+    border-radius: 9px;
+    box-shadow: 0 1px 2px rgba(31,29,26,0.04), 0 18px 44px rgba(31,29,26,0.10);
+    height: 452px;
+    overflow: hidden;
+    /* bleed: modest, so the inbox tasks stay readable while the panel still runs off-edge */
+    width: calc(100% + 96px);
   }
-  @media (max-width: 880px) {
-    .how-grid { grid-template-columns: repeat(2, 1fr); }
+  .shell-rail {
+    background: #F1EDE4;
+    border-right: 1px solid var(--rule);
+    display: flex; flex-direction: column; align-items: center;
+    padding: 14px 0; gap: 4px;
   }
-  @media (max-width: 480px) {
-    .how-grid { grid-template-columns: 1fr; }
+  .rail-mark { margin-bottom: 12px; }
+  .rail-item {
+    width: 32px; height: 32px; border-radius: 7px;
+    display: grid; place-items: center; color: var(--ink-35);
+    transition: background .2s, color .2s;
   }
-  .how-step {
-    text-align: left;
+  .rail-item svg { width: 18px; height: 18px; }
+  .rail-active { background: var(--oxblood); color: var(--working); }
+  .shell-main {
+    display: flex; flex-direction: column; min-width: 0;
+    border-right: 1px solid var(--rule);
   }
-  .how-step-num {
-    font-family: 'Fraunces', serif;
-    font-size: 38px;
-    color: var(--oxblood);
-    font-weight: 600;
-    line-height: 1;
-    margin-bottom: 12px;
+  .shell-title {
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 13px 16px; border-bottom: 1px solid var(--rule);
   }
-  .how-step-time {
-    font-size: 12px;
-    color: var(--oxblood);
-    text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    margin-bottom: 4px;
+  .shell-title-text {
+    font-family: var(--disp); font-weight: 500; font-size: 15px;
+    letter-spacing: -0.01em; color: var(--ink);
   }
-  .how-step-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 8px;
-    letter-spacing: -0.01em;
+  .shell-title-meta { font-size: 10px; color: var(--ink-35); }
+  .shell-inbox {
+    display: flex; flex-direction: column; min-width: 0;
+    background: #FCFBF7;
   }
-  .how-step-body {
-    font-size: 14px;
-    color: var(--ink-soft);
-    line-height: 1.5;
+  .inbox-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 13px 14px; border-bottom: 1px solid var(--rule);
+  }
+  .inbox-title {
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink); font-weight: 500;
+  }
+  .inbox-count { font-size: 10px; color: var(--ink-35); }
+  .inbox-count b { color: var(--oxblood); font-weight: 600; }
+  .inbox-list { padding: 8px; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
+  .inbox-item {
+    background: var(--panel); border: 1px solid var(--rule); border-radius: 7px;
+    padding: 9px 10px;
+  }
+  @keyframes inboxIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes inboxOut { from { opacity: 1; max-height: 80px; } to { opacity: 0; max-height: 0; padding-top: 0; padding-bottom: 0; margin-bottom: -6px; } }
+  .inbox-item.entering { animation: inboxIn .45s cubic-bezier(0.22,0.61,0.36,1) both; }
+  .inbox-item.leaving { animation: inboxOut .5s ease forwards; overflow: hidden; }
+  .inbox-item .it-label { font-size: 11.5px; font-weight: 500; color: var(--ink); line-height: 1.3; }
+  .inbox-list { padding: 8px 8px 8px 12px; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
+  .inbox-item .it-sub { font-family: var(--mono); font-size: 9px; color: var(--ink-35); margin-top: 2px; }
+  .inbox-item .it-action {
+    margin-top: 8px; display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--oxblood); cursor: default;
+  }
+  .inbox-item .it-action svg { width: 10px; height: 10px; }
+
+  .console {
+    position: relative;
+    background: var(--panel);
+    border: none;
+    border-radius: 0;
+    flex: 1;
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .console-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 16px; border-bottom: 1px solid var(--rule);
+    background: var(--panel); z-index: 6;
+  }
+  .console-head .left { display: flex; align-items: center; gap: 9px; }
+  .live-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--state-green);
+    animation: livepulse-g 2.4s infinite;
+  }
+  @keyframes livepulse-g {
+    0% { box-shadow: 0 0 0 0 rgba(78,93,58,0.5); }
+    70% { box-shadow: 0 0 0 5px rgba(78,93,58,0); }
+    100% { box-shadow: 0 0 0 0 rgba(78,93,58,0); }
+  }
+  .console-head .title {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink); font-weight: 500;
+  }
+  .console-head .meta {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.04em;
+    color: var(--ink-35);
+  }
+  .console-head .meta b { color: var(--ink-70); font-weight: 500; font-variant-numeric: tabular-nums; }
+
+  .stage { flex: 1; position: relative; overflow: hidden; padding: 4px 16px 8px; }
+  .stage::before, .stage::after {
+    content: ""; position: absolute; left: 0; right: 0; z-index: 5; pointer-events: none;
+  }
+  .stage::before { top: 0; height: 16px; background: linear-gradient(var(--panel), rgba(251,250,245,0)); }
+  .stage::after { bottom: 0; height: 36px; background: linear-gradient(rgba(251,250,245,0), var(--panel)); }
+  .stack { display: flex; flex-direction: column; gap: 0; }
+
+  /* shared workflow shell / rows, not boxes */
+  .wf {
+    background: transparent; border: none; border-radius: 0;
+    border-bottom: 1px solid var(--rule);
+    will-change: transform, opacity; overflow: hidden;
+  }
+  .wf:last-child { border-bottom: none; }
+  @keyframes wfIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes wfOut {
+    from { opacity: 1; transform: translateY(0); max-height: 320px; }
+    to { opacity: 0; transform: translateY(-10px); max-height: 0; padding-top: 0; padding-bottom: 0; border-width: 0; }
+  }
+  .wf.entering { animation: wfIn .5s cubic-bezier(0.22,0.61,0.36,1) both; }
+  .wf.leaving { animation: wfOut .42s cubic-bezier(0.4,0,0.2,1) forwards; }
+
+  /* ACTIVE workflow / distinguished by type + oxblood spine, no box */
+  .wf.active { padding: 16px 0 16px 14px; border-left: 1.5px solid var(--oxblood); position: relative; }
+  .wf-head { display: flex; align-items: flex-start; gap: 11px; }
+  .wf-id {
+    flex-shrink: 0; font-family: var(--mono); font-size: 9px; letter-spacing: 0.06em;
+    color: var(--ink-35); padding-top: 3px; min-width: 58px;
+  }
+  .wf-headmain { flex: 1; min-width: 0; }
+  .wf-subject { font-size: 14px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em; line-height: 1.3; font-family: var(--body); }
+  .wf-source {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; color: var(--ink-35);
+    margin-top: 3px; display: flex; align-items: center; gap: 7px;
+  }
+  .wf-source .sep { color: var(--rule-strong); }
+  .wf-time { flex-shrink: 0; font-family: var(--mono); font-size: 9.5px; color: var(--ink-35); padding-top: 3px; }
+
+  /* causal chain / 5 meaningful transitions */
+  .chain { margin-top: 12px; }
+  .step {
+    position: relative; display: flex; align-items: center; gap: 11px;
+    padding: 5px 0; padding-left: 2px;
+  }
+  .step::before {
+    content: ""; position: absolute; left: 7px; top: 18px; bottom: -4px;
+    width: 1px; background: var(--rule); 
+  }
+  .step:last-child::before { display: none; }
+  .step.done::before { background: var(--state-green); opacity: 0.5; }
+  .node {
+    flex-shrink: 0; width: 15px; height: 15px; border-radius: 50%;
+    border: 1px solid var(--rule-strong); background: var(--panel);
+    display: grid; place-items: center; z-index: 1;
+    transition: border-color .4s, background .4s;
+  }
+  .node svg { width: 9px; height: 9px; color: var(--paper); opacity: 0; transition: opacity .3s; }
+  .step.done .node { background: var(--state-green); border-color: var(--state-green); }
+  .step.done .node svg { opacity: 1; }
+  .step.current .node {
+    border-color: var(--oxblood); border-width: 1.5px;
+    animation: nodepulse 1.8s infinite;
+  }
+  @keyframes nodepulse {
+    0% { box-shadow: 0 0 0 0 rgba(112,30,40,0.35); }
+    70% { box-shadow: 0 0 0 5px rgba(112,30,40,0); }
+    100% { box-shadow: 0 0 0 0 rgba(112,30,40,0); }
+  }
+  .step-label {
+    font-size: 12.5px; line-height: 1.35; color: var(--ink-35);
+    transition: color .4s; letter-spacing: -0.003em;
+  }
+  .step.done .step-label { color: var(--ink-70); }
+  .step.current .step-label { color: var(--ink); font-weight: 500; }
+  .step.pending .step-label { opacity: 0.5; }
+
+  .wf-foot {
+    margin-top: 12px; padding-top: 0;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .status {
+    display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono);
+    font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-50); transition: color .4s;
+  }
+  .status .pip { width: 5px; height: 5px; border-radius: 50%; background: var(--ink-35); transition: background .4s; }
+  .status[data-s="processing"] { color: var(--state-amber); }
+  .status[data-s="processing"] .pip { background: var(--state-amber); animation: blink 1.1s infinite; }
+  .status[data-s="review"] { color: var(--oxblood); }
+  .status[data-s="review"] .pip { background: var(--oxblood); }
+  .status[data-s="completed"], .status[data-s="approved"] { color: var(--state-green); }
+  .status[data-s="completed"] .pip, .status[data-s="approved"] .pip { background: var(--state-green); }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .check { width: 13px; height: 13px; color: var(--state-green); }
+  .wf-foot .ref { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.04em; color: var(--ink-35); }
+
+  /* MINI workflow (compressed) */
+  .wf.mini { padding: 14px 0; }
+  .wf-mini-row { display: flex; align-items: center; gap: 11px; }
+  .wf-mini-id { font-family: var(--mono); font-size: 9px; color: var(--ink-35); min-width: 58px; }
+  .wf-mini-body { flex: 1; min-width: 0; }
+  .wf-mini-title {
+    font-size: 12.5px; font-weight: 500; color: var(--ink-70); line-height: 1.3;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--body);
+  }
+  .wf-mini-state {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--ink-35); flex-shrink: 0;
+  }
+  .wf-mini-rail { display: flex; gap: 2px; margin-top: 8px; }
+  .wf-mini-rail .seg { flex: 1; height: 2px; background: var(--rule); position: relative; overflow: hidden; }
+  .wf-mini-rail .seg .fill {
+    position: absolute; inset: 0; background: var(--oxblood);
+    transform: scaleX(0); transform-origin: left; transition: transform .6s ease;
+  }
+  .wf-mini-rail .seg.on .fill { transform: scaleX(1); opacity: 0.55; }
+  .wf-mini-rail .seg.done .fill { background: var(--state-green); transform: scaleX(1); }
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section.block { padding: 96px 0; position: relative; }
+  .sec-rule { border-top: 1px solid var(--rule); }
+  .sec-head-row {
+    display: grid; grid-template-columns: 200px 1fr; gap: 40px;
+    padding-bottom: 52px;
+  }
+  .sec-index {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--oxblood); padding-top: 8px;
+  }
+  .sec-head {
+    font-family: var(--disp); font-weight: 400; font-size: clamp(36px, 4.4vw, 56px);
+    line-height: 1.03; letter-spacing: -0.025em; max-width: 760px; color: var(--ink);
+  }
+  .sec-head em { font-style: italic; color: var(--oxblood); }
+  .sec-lede {
+    font-size: 16.5px; color: var(--ink-70); max-width: 580px; margin-top: 22px; line-height: 1.6;
   }
 
-  /* ─── FAQ ─── */
-  .faq {
-    max-width: 760px;
-    margin: 0 auto;
+  /* spec grid / 3 cols, hairline rules, no shadow */
+  .specgrid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); }
+  .spec-cell {
+    border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    padding: 30px 28px 34px; position: relative;
+    transition: background .25s;
   }
-  details.faq-item {
-    border-bottom: 1px solid var(--line);
-    padding: 20px 0;
+  .spec-cell:hover { background: var(--ox-tint); }
+  .spec-cell .wflabel {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--oxblood); margin-bottom: 16px;
   }
-  details.faq-item summary {
-    font-weight: 600;
-    font-size: 17px;
-    color: var(--ink);
-    cursor: pointer;
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    letter-spacing: -0.01em;
+  .spec-cell h3 {
+    font-family: var(--disp); font-weight: 500; font-size: 21px; letter-spacing: -0.01em;
+    line-height: 1.18; margin-bottom: 11px; color: var(--ink);
   }
-  details.faq-item summary::-webkit-details-marker { display: none; }
-  details.faq-item summary::after {
-    content: '+';
-    color: var(--oxblood);
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 1;
-    flex-shrink: 0;
-    transition: transform 0.2s;
+  .spec-cell p { font-size: 14px; color: var(--ink-70); line-height: 1.6; margin-bottom: 20px; }
+  .spec-cell .cmeta {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em;
+    color: var(--ink-35); display: flex; flex-direction: column; gap: 4px;
+    padding-top: 14px; border-top: 1px solid var(--rule);
   }
-  details.faq-item[open] summary::after { content: '−'; }
-  details.faq-item .faq-answer {
-    margin-top: 12px;
-    color: var(--ink-soft);
-    font-size: 15px;
-    line-height: 1.6;
+  .spec-cell .cmeta-status { color: var(--state-green); }
+
+  /* built-for / qualification */
+  .builtfor { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--rule); }
+  .bf-col { padding: 36px 36px 40px; border-right: 1px solid var(--rule); }
+  .bf-col:last-child { border-right: none; }
+  .bf-label {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 24px; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .bf-label::before { content: ""; width: 7px; height: 7px; border-radius: 50%; }
+  .bf-yes { color: var(--state-green); }
+  .bf-yes::before { background: var(--state-green); }
+  .bf-no { color: var(--ink-35); }
+  .bf-no::before { background: var(--ink-35); }
+  .bf-list { list-style: none; }
+  .bf-list li {
+    font-size: 16px; color: var(--ink); line-height: 1.5; padding: 11px 0 11px 26px;
+    border-bottom: 1px solid var(--rule); position: relative;
+  }
+  .bf-list li:last-child { border-bottom: none; }
+  .bf-list li::before {
+    content: ""; position: absolute; left: 4px; top: 19px;
+    width: 9px; height: 1.5px; background: var(--oxblood);
+  }
+  .bf-list-muted li { color: var(--ink-50); }
+  .bf-list-muted li::before { background: var(--ink-35); }
+
+  /* process / three-step typed timeline */
+  .process { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--rule); }
+  .proc {
+    padding: 30px 30px 36px; border-right: 1px solid var(--rule); position: relative;
+  }
+  .proc:last-child { border-right: none; }
+  .proc-num {
+    font-family: var(--mono); font-size: 14px; font-weight: 600; letter-spacing: 0.08em; color: var(--oxblood);
+    margin-bottom: 20px;
+  }
+  .proc h3 { font-family: var(--disp); font-weight: 500; font-size: 22px; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .proc p { font-size: 14px; color: var(--ink-70); line-height: 1.6; }
+
+  /* trust / design-partner strip */
+  .trust { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); background: rgba(112,30,40,0.025); }
+  .trust-inner {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    padding: 18px 0;
+  }
+  .trust-label { color: var(--oxblood); letter-spacing: 0.08em; }
+  .trust-meta { color: var(--ink-35); }
+
+  /* ---------- CLOSER (high-contrast carbon) ---------- */
+  .closer {
+    padding: 120px 0 130px; text-align: center;
+    background: var(--carbon); color: var(--working);
+    margin-top: 40px;
+  }
+  .closer .mono-tag { margin-bottom: 36px; color: var(--accent-soft); }
+  .closer .quote {
+    font-family: var(--disp); font-style: italic; font-weight: 400;
+    font-size: clamp(32px, 4.6vw, 56px); line-height: 1.14; letter-spacing: -0.02em;
+    max-width: 900px; margin: 0 auto 44px; color: var(--working);
+  }
+  .closer .cta-row { justify-content: center; margin-top: 0; }
+  .btn-on-dark { background: var(--oxblood); color: var(--working); box-shadow: 0 6px 22px rgba(112,30,40,0.32); }
+  .btn-on-dark:hover { background: #8A2A36; }
+  .btn-ghost-dark { color: var(--working); }
+  .btn-ghost-dark:hover { color: var(--accent-soft); }
+
+  /* ---------- FAQ ---------- */
+  .faq { padding: 100px 0 110px; }
+  .faq-list { border-top: 1px solid var(--rule); }
+  .faq-item { border-bottom: 1px solid var(--rule); }
+  .faq-q {
+    width: 100%; background: none; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    padding: 26px 4px; text-align: left;
+    font-family: var(--disp); font-weight: 500; font-size: 21px; letter-spacing: -0.01em;
+    color: var(--ink); transition: color .2s;
+  }
+  .faq-q:hover { color: var(--oxblood); }
+  .faq-mark { position: relative; flex-shrink: 0; width: 16px; height: 16px; }
+  .faq-mark::before, .faq-mark::after {
+    content: ""; position: absolute; background: var(--oxblood); transition: transform .25s ease, opacity .25s ease;
+  }
+  .faq-mark::before { left: 0; top: 7.5px; width: 16px; height: 1.5px; }
+  .faq-mark::after { left: 7.5px; top: 0; width: 1.5px; height: 16px; }
+  .faq-item.open .faq-mark::after { transform: scaleY(0); opacity: 0; }
+  .faq-a {
+    max-height: 0; overflow: hidden; transition: max-height .35s ease;
+  }
+  .faq-a p {
+    font-size: 16px; color: var(--ink-70); line-height: 1.65; max-width: 760px;
+    padding: 0 4px 28px;
   }
 
-  /* ─── Big CTA ─── */
-  .big-cta {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 72px 0;
-    text-align: center;
+  /* ---------- FOOTER (running footer) ---------- */
+  footer { border-top: 1px solid var(--rule); padding: 48px 0 40px; }
+  .foot-inner {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;
   }
-  .big-cta h2 {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: clamp(28px, 3.5vw, 36px);
-    margin-bottom: 16px;
-    letter-spacing: -0.02em;
-    color: var(--paper);
+  .foot-inner .mono { font-size: 10px; }
+  .foot-left { display: flex; align-items: center; gap: 16px; max-width: 560px; }
+  .foot-right { display: flex; align-items: center; gap: 24px; }
+  .foot-mission { font-family: var(--disp); font-size: 19px; font-weight: 400; color: var(--ink); line-height: 1.4; letter-spacing: -0.01em; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 940px) {
+    .wrap { padding: 0 22px; }
+    .sheet-frame { inset: 8px; }
+    .reg { display: none; }
+    .hero { grid-template-columns: 1fr; gap: 40px; padding: 18px 0 48px; }
+    .console-figure { order: 2; }
+    .console { height: 470px; }
+    .nav-right .navlink { display: none; }
+    .sec-head-row { grid-template-columns: 1fr; gap: 14px; }
+    .specgrid { grid-template-columns: 1fr; }
+    .process { grid-template-columns: 1fr; }
+    .proc { border-right: none; border-bottom: 1px solid var(--rule); }
+    .proc:last-child { border-bottom: none; }
+    .builtfor { grid-template-columns: 1fr; }
+    .bf-col { border-right: none; border-bottom: 1px solid var(--rule); padding: 30px 22px 34px; }
+    .bf-col:last-child { border-bottom: none; }
+    .sc-row { grid-template-columns: 1fr; gap: 32px; padding: 56px 0; }
+    .sc-row.flip .sc-text { order: 1; }
+    .sc-row.flip .sc-visual { order: 2; }
+    .art { width: 100%; }
+    .sc-row.flip .art { margin-left: 0; }
+    .showcase { padding: 64px 0 72px; }
+    .closer { padding: 80px 0 88px; }
+    .faq { padding: 70px 0 80px; }
+    .faq-q { font-size: 18px; }
+    section.block { padding: 64px 0; }
   }
-  .big-cta p {
-    font-size: 18px;
-    color: #b8b4ab;
-    margin-bottom: 32px;
-    max-width: 540px;
-    margin-left: auto;
-    margin-right: auto;
+  @media (max-width: 520px) {
+    .cta-row { flex-direction: column; align-items: stretch; }
+    .btn-primary, .btn-ghost { text-align: center; justify-content: center; }
+    .specrow { flex-direction: column; align-items: flex-start; gap: 8px; }
   }
-  .big-cta-row {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
   }
-  .big-cta .btn-outline {
-    border-color: var(--paper);
-    color: var(--paper);
+  /* ---------- SOLUTIONS SHOWCASE (dark) ---------- */
+  .showcase {
+    background: var(--ink-deep);
+    padding: 100px 0 110px;
   }
-  .big-cta .btn-outline:hover {
-    background: var(--paper);
-    color: var(--ink);
+  .showcase .wrap { position: relative; }
+  .showcase .sec-head-row { padding-bottom: 20px; }
+  .showcase .sec-index { color: var(--oxblood-soft); }
+  .showcase .sec-head { color: var(--working); }
+  .showcase .sec-head em { color: var(--oxblood-soft); }
+  .showcase .sec-lede { color: var(--cream-62); }
+
+  .sc-row {
+    display: grid; grid-template-columns: 1fr 1.15fr; gap: 80px;
+    align-items: center; padding: 96px 0;
+    position: relative; overflow: hidden;
+  }
+  .sc-row.flip .sc-text { order: 2; }
+  .sc-row.flip .sc-visual { order: 1; }
+  .sc-eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--oxblood-soft); margin-bottom: 22px;
+  }
+  .sc-title {
+    font-family: var(--disp); font-weight: 400; font-size: clamp(32px, 3.2vw, 44px);
+    line-height: 1.06; letter-spacing: -0.02em; color: var(--working); margin-bottom: 18px;
+  }
+  .sc-body { font-size: 16.5px; line-height: 1.6; color: var(--cream-62); max-width: 420px; }
+
+  .sc-visual { position: relative; overflow: hidden; border-radius: 14px; }
+  /* clip window: the white card runs off the RIGHT edge of this window; left is always clean */
+  .art-frame {
+    background: #2A1216;                 /* raised dark-oxblood frame behind the white card */
+    border: 1px solid rgba(201,138,110,0.14);
+    border-radius: 14px;
+    padding: 22px 0 22px 22px;           /* frame gutter on top/left/bottom; card bleeds off right */
+  }
+  .art {
+    background: var(--panel); border-radius: 10px 0 0 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.25), 0 30px 70px rgba(0,0,0,0.5);
+    overflow: hidden;
+    width: 122%;                          /* wider than frame so it clips off the right */
+  }
+  .art-head {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-35); padding: 14px 18px; border-bottom: 1px solid var(--rule);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .art-body { padding: 6px 0; }
+  .art-strip {
+    font-family: var(--mono); font-size: 10px; color: var(--ink-35);
+    padding: 12px 18px; border-top: 1px solid var(--rule);
+    display: flex; justify-content: space-between; gap: 12px;
+  }
+  .art-strip .st-status { color: var(--state-green); }
+
+  /* table artifact */
+  .art-table { width: 100%; border-collapse: collapse; }
+  .art-table th {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--ink-35); text-align: left; font-weight: 500;
+    padding: 10px 18px; border-bottom: 1px solid var(--rule);
+  }
+  .art-table td {
+    font-size: 13px; color: var(--ink-70); padding: 11px 18px;
+    border-bottom: 1px solid var(--rule); font-variant-numeric: tabular-nums;
+  }
+  .art-table tr:last-child td { border-bottom: none; }
+  .art-table td.tnum { text-align: right; }
+  .art-table th.tnum { text-align: right; }
+  .art-check { color: var(--state-green); }
+  .art-pill {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--oxblood); background: var(--ox-tint); padding: 3px 8px; border-radius: 4px;
+  }
+  .art-total td { font-weight: 600; color: var(--ink); border-top: 1px solid var(--rule-strong); }
+  .art-total-val { color: var(--oxblood); }
+
+  /* checklist artifact */
+  .art-check-row {
+    display: flex; align-items: center; gap: 12px; padding: 11px 18px;
+    border-bottom: 1px solid var(--rule); font-size: 13px; color: var(--ink-70);
+  }
+  .art-check-row:last-child { border-bottom: none; }
+  .art-check-row .doc-ic { flex-shrink: 0; color: var(--ink-35); width: 15px; height: 15px; }
+  .art-check-row .ck-label { flex: 1; }
+  .art-check-row .ck-pip {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.04em; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .ck-done { color: var(--state-green); }
+  .ck-doing { color: var(--state-amber); }
+  .ck-pending { color: var(--ink-35); }
+  .ck-ready { color: var(--oxblood); }
+  .ck-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .ck-doing .ck-dot { animation: blink 1.1s infinite; }
+
+  /* node graph artifact */
+  .art-nodes { padding: 18px; display: flex; flex-direction: column; gap: 0; }
+  .art-node {
+    background: #FFFDF9; border: 1px solid var(--rule); border-radius: 8px;
+    padding: 12px 14px; position: relative;
+  }
+  .art-node.active { border-color: var(--oxblood); box-shadow: 0 0 0 3px var(--ox-tint); }
+  .art-node .nd-label { font-size: 13px; font-weight: 500; color: var(--ink); }
+  .art-node .nd-out { font-family: var(--mono); font-size: 9.5px; color: var(--ink-35); margin-top: 3px; }
+  .art-node.active .nd-out { color: var(--oxblood); }
+  .art-connector { height: 20px; width: 1.5px; margin-left: 22px; background: repeating-linear-gradient(var(--oxblood) 0 3px, transparent 3px 6px); }
+  .art-node.active::after {
+    content: ""; position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    width: 7px; height: 7px; border-radius: 50%; background: var(--oxblood);
+    animation: nodepulse 1.8s infinite;
   }
 
-  /* ─── Footer ─── */
-  footer.site-footer {
-    background: var(--paper);
-    border-top: 1px solid var(--line);
-    padding: 48px 0 24px;
-    color: var(--ink-faint);
-    font-size: 14px;
+  /* timeline artifact */
+  .art-timeline { padding: 18px; }
+  .tl-item { display: flex; gap: 12px; position: relative; padding-bottom: 16px; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-item::before {
+    content: ""; position: absolute; left: 6px; top: 16px; bottom: -2px; width: 1.5px; background: var(--oxblood); opacity: 0.4;
   }
-  .footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 32px;
-    margin-bottom: 32px;
+  .tl-item:last-child::before { display: none; }
+  .tl-dot { flex-shrink: 0; width: 13px; height: 13px; border-radius: 50%; background: var(--state-green); display: grid; place-items: center; z-index: 1; margin-top: 1px; }
+  .tl-dot svg { width: 8px; height: 8px; color: #fff; }
+  .tl-body .tl-label { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.3; }
+  .tl-body .tl-sub { font-family: var(--mono); font-size: 9.5px; color: var(--ink-35); margin-top: 2px; }
+
+  /* ---------- BOOK A DEMO MODAL ---------- */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(24,24,27,0.55);
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    opacity: 0; visibility: hidden;
+    transition: opacity .2s ease, visibility .2s ease;
   }
-  @media (max-width: 700px) {
-    .footer-grid { grid-template-columns: 1fr 1fr; }
+  .modal-overlay.open { opacity: 1; visibility: visible; }
+  .modal-dialog {
+    position: relative; width: 100%; max-width: 460px;
+    background: var(--panel); border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    padding: 36px;
+    transform: translateY(12px); opacity: 0;
+    transition: transform .28s cubic-bezier(0.22,0.61,0.36,1), opacity .28s ease;
   }
-  .footer-col h4 {
-    font-size: 13px;
-    text-transform: uppercase;
-    color: var(--ink);
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    margin-bottom: 12px;
+  .modal-overlay.open .modal-dialog { transform: translateY(0); opacity: 1; }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: none; border: none; cursor: pointer; color: var(--ink-50);
+    width: 28px; height: 28px; display: grid; place-items: center; border-radius: 6px;
+    transition: color .2s, background .2s;
   }
-  .footer-col p, .footer-col a {
-    color: var(--ink-soft);
-    text-decoration: none;
-    display: block;
-    padding: 3px 0;
-    font-size: 14px;
+  .modal-close:hover { color: var(--oxblood); background: var(--ox-tint); }
+  .modal-kicker { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--oxblood); margin-bottom: 12px; }
+  .modal-title { font-family: var(--disp); font-weight: 500; font-size: 26px; letter-spacing: -0.01em; color: var(--ink); margin-bottom: 8px; }
+  .modal-sub { font-size: 14px; color: var(--ink-70); line-height: 1.5; margin-bottom: 24px; }
+  .modal-form { display: flex; flex-direction: column; gap: 14px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field-label { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-50); }
+  .field input, .field select {
+    font-family: var(--body); font-size: 14px; color: var(--ink);
+    background: #FFFDF9; border: 1px solid var(--rule-strong); border-radius: 6px;
+    padding: 11px 12px; width: 100%;
+    transition: border-color .2s;
   }
-  .footer-col a:hover { color: var(--oxblood); }
-  .footer-bottom {
-    border-top: 1px solid var(--line);
-    padding-top: 16px;
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    color: var(--ink-faint);
+  .field input:focus, .field select:focus { outline: none; border-color: var(--oxblood); }
+  .modal-submit {
+    margin-top: 6px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+    background: var(--oxblood); color: var(--working); border: none; cursor: pointer;
+    padding: 14px; border-radius: 6px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    transition: background .2s;
   }
-  @media (max-width: 600px) {
-    .footer-bottom { flex-direction: column; gap: 8px; }
+  .modal-submit:hover { background: var(--oxblood-deep); }
+  .modal-fine { font-size: 12px; color: var(--ink-35); text-align: center; margin-top: 4px; }
+  .modal-success { text-align: center; padding: 20px 0; }
+  .success-check {
+    width: 52px; height: 52px; border-radius: 50%; margin: 0 auto 18px;
+    display: grid; place-items: center; color: var(--working); background: var(--state-green);
+  }
+  .modal-success p { font-family: var(--disp); font-size: 20px; color: var(--ink); line-height: 1.35; max-width: 300px; margin: 0 auto; }
+  @media (max-width: 520px) {
+    .modal-dialog { padding: 28px 22px; }
   }
 
-  .form-success-inline {
-    background: var(--paper-warm);
-    border: 1px solid var(--green);
-    padding: 20px;
-    border-radius: 4px;
-    text-align: center;
-    display: none;
-  }
-  .form-success-inline.show { display: block; }
-  .form-success-inline strong {
-    color: var(--green);
-    display: block;
-    margin-bottom: 4px;
-    font-size: 15px;
-  }
-  .form-success-inline p {
-    color: var(--ink-soft);
-    font-size: 13px;
-    margin: 0;
-  }
 </style>
 </head>
 <body>
 
-<!-- Announcement bar -->
-<div class="announce-bar">
-  <strong>Now accepting design partners</strong> for our 2026 cohort — limited to 3-5 companies.
-  <a href="#contact">Apply →</a>
-</div>
+<div class="sheet-frame"></div>
+<span class="reg tl"></span><span class="reg tr"></span><span class="reg bl"></span><span class="reg br"></span>
 
-<!-- Header -->
-<header class="site-header">
-  <div class="container header-row">
+<button class="banner" data-modal-open>
+  <span class="banner-text">Now accepting design partners for our 2026 cohort — limited to 5 companies.</span>
+  <span class="banner-cta">Apply now <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+</button>
+
+<div class="runhead" id="runhead">
+  <div class="wrap runhead-inner">
     <a href="#" class="brand">
       <span class="brand-mark">A</span>
       <span class="brand-name">
@@ -728,388 +838,710 @@
         <span class="brand-name-sub">Apprenticeships</span>
       </span>
     </a>
-    <div class="header-contact">
-      <div class="header-phone">
-        <span class="header-phone-label">Call us</span>
-        <a href="tel:+16092487950" class="header-phone-number">(609) 248-7950</a>
+    <div class="nav-right">
+      <a class="navlink" href="#how">Product</a>
+      <a class="navlink" href="#handles">Solutions</a>
+      <button class="nav-cta" data-modal-open>Book a demo</button>
+    </div>
+  </div>
+</div>
+
+<header class="wrap">
+  <div class="hero">
+    <div class="hero-left">
+      <h1>Scale Your<br><em>Workforce.</em></h1>
+      <p class="lede">The best apprenticeship programs spend their time training people, not chasing paperwork. Audacity handles the operational work that keeps your program moving.</p>
+      <div class="cta-row">
+        <button class="btn-primary" data-modal-open>Book a demo</button>
+        <a href="#how" class="btn-ghost">See How It Works
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
-      <a href="https://calendar.app.google/JotXeTxZUJ6oMdpT9" target="_blank" rel="noopener" class="btn">Book a Time</a>
+    </div>
+
+    <div class="console-figure">
+      <div class="fig-caption">
+        <span class="mono figtag">The Audacity platform</span>
+      </div>
+      <div class="shell">
+        <div class="shell-rail">
+          <div class="rail-mark">
+            <svg width="18" height="21" viewBox="0 0 30 34" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M13 1 L17 1 L28 33 L22 33 L19.2 24 L10.8 24 L8 33 L2 33 Z M15 5.5 L11 21 L19 21 Z" fill="#701E28"/></svg>
+          </div>
+          <div class="rail-item rail-active" title="Command center"><svg viewBox="0 0 20 20" fill="none"><rect x="2.5" y="2.5" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.4"/><rect x="11.5" y="2.5" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.4"/><rect x="2.5" y="11.5" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.4"/><rect x="11.5" y="11.5" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.4"/></svg></div>
+          <div class="rail-item" title="Apprentices"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M4 17c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.4"/></svg></div>
+          <div class="rail-item" title="Workflows"><svg viewBox="0 0 20 20" fill="none"><path d="M4 5h12M4 10h12M4 15h7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <div class="rail-item" title="Records"><svg viewBox="0 0 20 20" fill="none"><path d="M5 3h7l3 3v11a.5.5 0 01-.5.5h-9A.5.5 0 015 17V3z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+          <div class="rail-item" title="Compliance"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2l6 2.5v4.5c0 4-2.7 6.7-6 8-3.3-1.3-6-4-6-8V4.5L10 2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="shell-main">
+          <div class="shell-title">
+            <span class="shell-title-text">Command Center</span>
+            <span class="shell-title-meta mono">Whitfield Electric</span>
+          </div>
+          <div class="console">
+            <div class="console-head">
+              <div class="left"><span class="live-dot"></span><span class="title">Operations</span></div>
+              <div class="meta"><b id="count">0</b> active · <span id="proc-total">0</span> processed today</div>
+            </div>
+            <div class="stage"><div class="stack" id="stack"></div></div>
+          </div>
+        </div>
+        <div class="shell-inbox">
+          <div class="inbox-head">
+            <span class="inbox-title mono">Inbox</span>
+            <span class="inbox-count mono"><b id="inbox-count">3</b> waiting</span>
+          </div>
+          <div class="inbox-list" id="inbox"></div>
+        </div>
+        </div>
+      </div>
     </div>
   </div>
 </header>
 
-<!-- Hero -->
-<div class="hero">
-  <div class="container hero-grid">
-    <div>
-      <div class="hero-eyebrow">Serving CO &amp; TX trades</div>
-      <h1 class="hero-title">
-        DOL-Registered Apprenticeship Programs — <span>Built for Your Business.</span>
-      </h1>
-      <p class="hero-sub">
-        We handle the registration, the reporting, and the compliance — so you
-        can train your own pipeline without the paperwork eating your year.
-      </p>
-      <div class="hero-stat">
-        <span class="hero-stat-num">6–12 weeks</span>
-        <span class="hero-stat-label">From kickoff to your first registered apprentice</span>
+<main class="wrap">
+
+  <section class="block sec-rule" id="how">
+    <div class="sec-head-row">
+      <div class="sec-index">01 / How it works</div>
+      <div>
+        <h2 class="sec-head">As your business runs, <em>Audacity keeps the program moving.</em></h2>
+        <p class="sec-lede">You don't have to start the work or remember when it's due. Audacity watches what's happening in the program, recognizes what needs to happen next, and prepares the documents before the deadline arrives. The paperwork is ready when you are.</p>
       </div>
-      <div class="hero-cta-row">
-        <a href="https://calendar.app.google/JotXeTxZUJ6oMdpT9" target="_blank" rel="noopener" class="btn btn-large">Book a Time</a>
-        <a href="tel:+16092487950" class="btn btn-outline btn-large">Call (609) 248-7950</a>
+    </div>
+    <div class="process">
+      <div class="proc">
+        <div class="proc-num">01 / Watch</div>
+        <h3>It catches what would otherwise live in someone's head</h3>
+        <p>Hours, milestones, wage steps, reporting windows, and deadlines change constantly. Audacity tracks them as they happen, so nothing waits on someone remembering it first.</p>
       </div>
-      <ul class="hero-bullets">
-        <li>For electrical, HVAC, mechanical &amp; plumbing</li>
-        <li>Built for businesses with 25-200 employees</li>
-        <li>First-year program operations included</li>
-        <li>One business day response, every time</li>
-      </ul>
+      <div class="proc">
+        <div class="proc-num">02 / Decide</div>
+        <h3>It knows what needs to happen next</h3>
+        <p>An apprentice becomes eligible for a raise. An audit window opens. A grant deadline approaches. Audacity recognizes the trigger and starts the right workflow on its own.</p>
+      </div>
+      <div class="proc">
+        <div class="proc-num">03 / Execute</div>
+        <h3>It brings back finished work</h3>
+        <p>Records pulled, forms prepared, packets assembled, filings drafted. The work shows up ready for review, not as another task on your list.</p>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+<section class="showcase" id="handles">
+  <div class="wrap">
+    <div class="sec-head-row">
+      <div class="sec-index">02 / What Audacity handles</div>
+      <div>
+        <h2 class="sec-head">The complex parts of running a program, <em>handled in the background.</em></h2>
+        <p class="sec-lede">These are the recurring operational jobs that usually require someone to track dates, chase records, fill forms, and keep the program defensible. Audacity keeps them moving as part of the system.</p>
+      </div>
     </div>
 
-    <!-- Quick quote form -->
-    <div class="hero-card">
-      <h2>Free 20-min consultation</h2>
-      <p>Tell us a bit about your business. We'll respond within one business day.</p>
-      <form id="hero-form">
-        <div class="form-row">
-          <label>Your name</label>
-          <input type="text" name="firstName" required placeholder="First name">
-        </div>
-        <div class="form-row">
-          <label>Company</label>
-          <input type="text" name="company" required placeholder="Company name">
-        </div>
-        <div class="form-row">
-          <label>Email</label>
-          <input type="email" name="email" required placeholder="you@company.com">
-        </div>
-        <div class="form-row row-2">
-          <div>
-            <label>Phone</label>
-            <input type="tel" name="phone" placeholder="(303) ___-____">
+    <!-- ROW 1: Wage Steps, table, visual right -->
+    <div class="sc-row">
+      <div class="sc-text">
+        <div class="sc-eyebrow">Wage Steps</div>
+        <h3 class="sc-title">Moves apprentices to the next wage step</h3>
+        <p class="sc-body">It tracks hours and competencies against each step. The moment an apprentice qualifies, it documents the progression and routes it for approval.</p>
+      </div>
+      <div class="sc-visual">
+        <div class="art-frame">
+        <div class="art">
+          <div class="art-head">Wage progression packet · D. Okafor</div>
+          <div class="art-body">
+            <table class="art-table">
+              <thead><tr><th>Requirement</th><th class="tnum">Target</th><th class="tnum">Logged</th><th class="tnum">Status</th></tr></thead>
+              <tbody>
+                <tr><td>On-the-job hours</td><td class="tnum">2,000</td><td class="tnum">2,000</td><td class="tnum"><span class="art-check">✓</span></td></tr>
+                <tr><td>Related instruction</td><td class="tnum">144</td><td class="tnum">144</td><td class="tnum"><span class="art-check">✓</span></td></tr>
+                <tr><td>Competency sign-offs</td><td class="tnum">12</td><td class="tnum">12</td><td class="tnum"><span class="art-check">✓</span></td></tr>
+                <tr><td>Wage step</td><td class="tnum">3 → 4</td><td class="tnum"></td><td class="tnum"><span class="art-pill">Ready</span></td></tr>
+              </tbody>
+            </table>
           </div>
-          <div>
-            <label>State</label>
-            <select name="state" required>
-              <option value="">Select</option>
-              <option value="CO">CO</option>
-              <option value="TX">TX</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
+          <div class="art-strip"><span>Output: Wage progression packet</span><span class="st-status">Ready for approval</span></div>
         </div>
-        <button type="submit" class="btn">Book a Time →</button>
-        <p class="hero-card-foot">No commitment. We'll respond within one business day.</p>
-      </form>
-      <div class="form-success-inline" id="hero-success">
-        <strong>✓ Got it.</strong>
-        <p>We'll be in touch within one business day.</p>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- Trust strip — all numbers now in oxblood -->
-<div class="trust-strip">
-  <div class="container">
-    <div class="trust-grid">
-      <div>
-        <div class="trust-num">92%</div>
-        <div class="trust-label">Apprentice retention<br>vs 55% non-apprentice (DOL)</div>
+    <!-- ROW 2: Audit Packages, checklist, visual left -->
+    <div class="sc-row flip">
+      <div class="sc-text">
+        <div class="sc-eyebrow">Audit Packages</div>
+        <h3 class="sc-title">Builds the audit package before the window opens</h3>
+        <p class="sc-body">It gathers payroll records, agreements, and evidence ahead of time, so the audit is a review instead of a scramble.</p>
       </div>
-      <div>
-        <div class="trust-num">6–12</div>
-        <div class="trust-label">Weeks from kickoff to your<br>first registered apprentice</div>
-      </div>
-      <div>
-        <div class="trust-num">144+</div>
-        <div class="trust-label">Hours of related instruction<br>we coordinate per apprentice/year</div>
-      </div>
-      <div>
-        <div class="trust-num">2</div>
-        <div class="trust-label">States we cover today —<br>Colorado &amp; Texas</div>
+      <div class="sc-visual">
+        <div class="art-frame">
+        <div class="art">
+          <div class="art-head">Q2 audit package · 14 apprentices</div>
+          <div class="art-body">
+            <div class="art-check-row"><svg class="doc-ic" viewBox="0 0 16 16" fill="none"><path d="M4 2h5l3 3v9H4z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span class="ck-label">Payroll records (14)</span><span class="ck-pip ck-done"><span class="ck-dot"></span>Collected</span></div>
+            <div class="art-check-row"><svg class="doc-ic" viewBox="0 0 16 16" fill="none"><path d="M4 2h5l3 3v9H4z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span class="ck-label">Apprenticeship agreements</span><span class="ck-pip ck-done"><span class="ck-dot"></span>Collected</span></div>
+            <div class="art-check-row"><svg class="doc-ic" viewBox="0 0 16 16" fill="none"><path d="M4 2h5l3 3v9H4z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span class="ck-label">OJT hour logs</span><span class="ck-pip ck-done"><span class="ck-dot"></span>Collected</span></div>
+            <div class="art-check-row"><svg class="doc-ic" viewBox="0 0 16 16" fill="none"><path d="M4 2h5l3 3v9H4z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span class="ck-label">Wage determination records</span><span class="ck-pip ck-doing"><span class="ck-dot"></span>Collecting</span></div>
+            <div class="art-check-row"><svg class="doc-ic" viewBox="0 0 16 16" fill="none"><path d="M4 2h5l3 3v9H4z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg><span class="ck-label">EEO documentation</span><span class="ck-pip ck-pending"><span class="ck-dot"></span>Pending</span></div>
+          </div>
+          <div class="art-strip"><span>Output: Audit packet</span><span class="st-status">Records collected</span></div>
+        </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- WHO WE SERVE — MOVED UP -->
-<div class="section section-alt" id="fit">
-  <div class="container">
-    <div class="section-heading">
-      <div class="section-eyebrow">Is this for you?</div>
-      <h2 class="section-title">Built for mid-size industrial trades.</h2>
-      <p class="section-sub">
-        We say up front who we're built for — so you can decide if the rest of
-        this page is worth your time.
-      </p>
+    <!-- ROW 3: Grant Applications, node graph, visual right -->
+    <div class="sc-row">
+      <div class="sc-text">
+        <div class="sc-eyebrow">Grant Applications</div>
+        <h3 class="sc-title">Drafts grant applications as funding opens</h3>
+        <p class="sc-body">It flags opportunities the moment they appear and prepares the application from your existing program record.</p>
+      </div>
+      <div class="sc-visual">
+        <div class="art-frame">
+        <div class="art">
+          <div class="art-head">State expansion fund · Application</div>
+          <div class="art-nodes">
+            <div class="art-node"><div class="nd-label">Opportunity detected</div><div class="nd-out">Output: fund_match</div></div>
+            <div class="art-connector"></div>
+            <div class="art-node"><div class="nd-label">Program record pulled</div><div class="nd-out">Output: program_data</div></div>
+            <div class="art-connector"></div>
+            <div class="art-node active"><div class="nd-label">Draft application</div><div class="nd-out">Output: application_draft</div></div>
+          </div>
+          <div class="art-strip"><span>Output: Grant application draft</span><span class="st-status">Ready for review</span></div>
+        </div>
+        </div>
+      </div>
     </div>
-    <div class="fit-grid">
-      <div class="fit-card fit-card-yes">
-        <div class="fit-eyebrow">✓ This is you</div>
-        <h3 class="fit-title">When we work well together.</h3>
-        <ul class="fit-list">
-          <li><strong>Trade:</strong> Electrical, HVAC, mechanical, plumbing, instrumentation, controls.</li>
-          <li><strong>Size:</strong> 25–200 employees.</li>
-          <li><strong>Work:</strong> Commercial &amp; industrial — data centers, healthcare, refineries, manufacturing, utility, government.</li>
-          <li><strong>Decision-maker:</strong> Owner or operations decision maker. Already hiring apprentices informally, or actively considering it.</li>
+
+    <!-- ROW 4: Tax Credits, table, visual left -->
+    <div class="sc-row flip">
+      <div class="sc-text">
+        <div class="sc-eyebrow">Tax Credits</div>
+        <h3 class="sc-title">Files the tax-credit claims you're owed</h3>
+        <p class="sc-body">It matches qualifying wages and hours to available credits and prepares the claim for filing.</p>
+      </div>
+      <div class="sc-visual">
+        <div class="art-frame">
+        <div class="art">
+          <div class="art-head">Work opportunity credit · 2026</div>
+          <div class="art-body">
+            <table class="art-table">
+              <thead><tr><th>Apprentice</th><th class="tnum">Qualifying wages</th><th class="tnum">Hours</th><th class="tnum">Credit</th></tr></thead>
+              <tbody>
+                <tr><td>A. Reyes</td><td class="tnum">$18,400</td><td class="tnum">1,040</td><td class="tnum">$2,400</td></tr>
+                <tr><td>M. Chen</td><td class="tnum">$16,200</td><td class="tnum">980</td><td class="tnum">$2,400</td></tr>
+                <tr><td>D. Okafor</td><td class="tnum">$19,100</td><td class="tnum">1,120</td><td class="tnum">$2,400</td></tr>
+                <tr><td>J. Ford</td><td class="tnum">$17,800</td><td class="tnum">1,010</td><td class="tnum">$2,400</td></tr>
+                <tr class="art-total"><td colspan="2">Total qualifying credit&nbsp;&nbsp;<span class="art-total-val">$9,600</span></td><td class="tnum"></td><td class="tnum"></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="art-strip"><span>Output: Tax credit claim</span><span class="st-status">Ready to file</span></div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 5: Compliance, schedule checklist, visual right -->
+    <div class="sc-row">
+      <div class="sc-text">
+        <div class="sc-eyebrow">Compliance</div>
+        <h3 class="sc-title">Keeps the program compliant and reporting on time</h3>
+        <p class="sc-body">It assembles the required reports from live program data and keeps deadlines from becoming last-minute fire drills.</p>
+      </div>
+      <div class="sc-visual">
+        <div class="art-frame">
+        <div class="art">
+          <div class="art-head">Compliance · Upcoming</div>
+          <div class="art-body">
+            <div class="art-check-row"><span class="ck-label">Annual program report</span><span class="ck-pip ck-doing"><span class="ck-dot"></span>Assembling</span></div>
+            <div class="art-check-row"><span class="ck-label">EEO utilization report</span><span class="ck-pip ck-done"><span class="ck-dot"></span>Filed Mar 4</span></div>
+            <div class="art-check-row"><span class="ck-label">Quarterly RAPIDS update</span><span class="ck-pip ck-ready"><span class="ck-dot"></span>Due in 6 days</span></div>
+            <div class="art-check-row"><span class="ck-label">Ratio compliance check</span><span class="ck-pip ck-done"><span class="ck-dot"></span>Passed</span></div>
+          </div>
+          <div class="art-strip"><span>Output: Compliance report</span><span class="st-status">On schedule</span></div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 6: Program Record, timeline, visual left -->
+    <div class="sc-row flip">
+      <div class="sc-text">
+        <div class="sc-eyebrow">Program Record</div>
+        <h3 class="sc-title">Keeps the whole program defensible</h3>
+        <p class="sc-body">It connects every progression, filing, and approval, so the program's full history stays current and ready for anyone who asks.</p>
+      </div>
+      <div class="sc-visual">
+        <div class="art-frame">
+        <div class="art">
+          <div class="art-head">Program record · Continuous</div>
+          <div class="art-timeline">
+            <div class="tl-item"><div class="tl-dot"><svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="tl-body"><div class="tl-label">Wage progression filed</div><div class="tl-sub">D. Okafor · Mar 12</div></div></div>
+            <div class="tl-item"><div class="tl-dot"><svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="tl-body"><div class="tl-label">Q1 report submitted</div><div class="tl-sub">RAPIDS · Apr 1</div></div></div>
+            <div class="tl-item"><div class="tl-dot"><svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="tl-body"><div class="tl-label">Grant application submitted</div><div class="tl-sub">State fund · Apr 9</div></div></div>
+            <div class="tl-item"><div class="tl-dot"><svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="tl-body"><div class="tl-label">Audit package filed</div><div class="tl-sub">Q2 · Jun 30</div></div></div>
+          </div>
+          <div class="art-strip"><span>Output: Program record</span><span class="st-status">Current</span></div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<main class="wrap">
+
+  <section class="block sec-rule" id="built-for">
+    <div class="sec-head-row">
+      <div class="sec-index">03 / Built for</div>
+      <div>
+        <h2 class="sec-head">Built for teams running <em>real workforce programs.</em></h2>
+      </div>
+    </div>
+    <div class="builtfor">
+      <div class="bf-col">
+        <div class="bf-label bf-yes">This is for</div>
+        <ul class="bf-list">
+          <li>Apprenticeship sponsors</li>
+          <li>Employers running or launching registered apprenticeship programs</li>
+          <li>Workforce boards and intermediaries</li>
+          <li>Teams that need wage steps, reports, audits, grants, credits, and records to stay organized</li>
         </ul>
       </div>
-      <div class="fit-card fit-card-no">
-        <div class="fit-eyebrow">✗ Probably not</div>
-        <h3 class="fit-title">When we're not the answer.</h3>
-        <ul class="fit-list">
-          <li><strong>National GCs</strong> with existing corporate training programs.</li>
-          <li><strong>Businesses under 5 employees</strong> — the paperwork doesn't pay back yet.</li>
-          <li><strong>Anyone wanting staffing services</strong> — we set up the program, you recruit and hire.</li>
-          <li><strong>Anyone needing apprentices on Monday</strong> — registration takes 6–12 weeks.</li>
+      <div class="bf-col">
+        <div class="bf-label bf-no">Probably not for</div>
+        <ul class="bf-list bf-list-muted">
+          <li>Companies looking for staffing services</li>
+          <li>Companies that need apprentices tomorrow</li>
+          <li>Very small teams where the administrative burden hasn't appeared yet</li>
         </ul>
       </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- SERVICES — simplified copy -->
-<div class="section" id="services">
-  <div class="container">
-    <div class="section-heading">
-      <div class="section-eyebrow">What we handle</div>
-      <h2 class="section-title">The distracting parts of running a program.</h2>
-      <p class="section-sub">
-        Apprenticeship programs work. Setting them up is months of paperwork
-        nobody at your business has time for. We do that part.
-      </p>
-    </div>
-    <div class="services-grid">
-      <div class="service-card" id="service-design">
-        <div class="service-num">1</div>
-        <h3 class="service-title">Program Design</h3>
-        <p class="service-tagline">We build your program around how your business actually runs.</p>
-        <p class="service-body">
-          Trade designation, term length, wage progression, on-the-job hours, and
-          training plan — written to match your work, not a template.
-          <em class="detail">Industry term: "apprenticeship standards"</em>
-        </p>
-      </div>
-      <div class="service-card" id="service-approval">
-        <div class="service-num">2</div>
-        <h3 class="service-title">DOL Approval</h3>
-        <p class="service-tagline">We file the paperwork and chase the responses. You stay on tools.</p>
-        <p class="service-body">
-          Submission to the right agency (federal or your state), back-and-forth
-          on clarifications, and shepherding through approval. Typically 4–8 weeks.
-          <em class="detail">Where we file: Office of Apprenticeship or State Apprenticeship Agency</em>
-        </p>
-      </div>
-      <div class="service-card" id="service-tracking">
-        <div class="service-num">3</div>
-        <h3 class="service-title">Apprentice Tracking</h3>
-        <p class="service-tagline">Every apprentice's hours, wages, and progress — kept current.</p>
-        <p class="service-body">
-          We register your apprentices in the federal database and keep their
-          records up to date. Quarterly check-ins to make sure what we report
-          matches what you ran.
-          <em class="detail">Federal system of record: RAPIDS</em>
-        </p>
-      </div>
-      <div class="service-card" id="service-compliance">
-        <div class="service-num">4</div>
-        <h3 class="service-title">Compliance &amp; Renewal</h3>
-        <p class="service-tagline">We keep the program in good standing year after year.</p>
-        <p class="service-body">
-          EEO documentation, apprentice-to-journeyman ratios, prevailing-wage
-          records for IRA and Davis-Bacon jobs, and the annual program review.
-          Nothing falls through.
-          <em class="detail">Bonus: documentation needed for IRA prevailing-wage tax credits</em>
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
+</main>
 
-<!-- How it works -->
-<div class="section section-alt" id="process">
-  <div class="container">
-    <div class="section-heading">
-      <div class="section-eyebrow">How it works</div>
-      <h2 class="section-title">Four phases. Honest timelines.</h2>
-      <p class="section-sub">
-        We tell you 6-12 weeks because that's what it actually takes. No shortcuts,
-        no over-promising.
-      </p>
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-left">
+      <svg width="16" height="19" viewBox="0 0 30 34" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M13 1 L17 1 L28 33 L22 33 L19.2 24 L10.8 24 L8 33 L2 33 Z M15 5.5 L11 21 L19 21 Z" fill="#701E28"/></svg>
+      <span class="foot-mission">Audacity helps apprenticeship programs spend less time chasing paperwork and more time training people.</span>
     </div>
-    <div class="how-grid">
-      <div class="how-step">
-        <div class="how-step-num">01</div>
-        <div class="how-step-time">20 minutes</div>
-        <div class="how-step-title">Discovery Call</div>
-        <p class="how-step-body">
-          We learn how your business hires and trains today. You learn whether
-          registration is the right fit.
-        </p>
-      </div>
-      <div class="how-step">
-        <div class="how-step-num">02</div>
-        <div class="how-step-time">2-3 weeks</div>
-        <div class="how-step-title">Program Design</div>
-        <p class="how-step-body">
-          We write your program standards around your trade, your wages, your
-          training. Reviewed with you before anything is submitted.
-        </p>
-      </div>
-      <div class="how-step">
-        <div class="how-step-num">03</div>
-        <div class="how-step-time">4-8 weeks</div>
-        <div class="how-step-title">DOL Approval</div>
-        <p class="how-step-body">
-          We file. We respond to clarifications. You stay focused on running the
-          business. State approval timelines vary.
-        </p>
-      </div>
-      <div class="how-step">
-        <div class="how-step-num">04</div>
-        <div class="how-step-time">Ongoing</div>
-        <div class="how-step-title">Operations</div>
-        <p class="how-step-body">
-          Apprentice registration, reporting, quarterly check-ins, annual review.
-          One year included in your fee.
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- FAQ -->
-<div class="section">
-  <div class="container">
-    <div class="section-heading">
-      <div class="section-eyebrow">FAQs</div>
-      <h2 class="section-title">Questions we hear a lot.</h2>
-    </div>
-    <div class="faq">
-      <details class="faq-item">
-        <summary>What does it cost?</summary>
-        <div class="faq-answer">
-          One fixed number, quoted on the discovery call. It covers Phases 02-04 for the first twelve months — program design through your annual review. No hourly billing, no surprise invoices. We tell you the number before you commit to anything.
-        </div>
-      </details>
-      <details class="faq-item">
-        <summary>Why not just do this ourselves?</summary>
-        <div class="faq-answer">
-          You can. It's feasible if you have a dedicated HR or compliance person with time. We've seen businesses do it well. We've also seen it run for two years and stall because the operations team kept getting pulled to actual fires. The question is where your team's attention is most valuable.
-        </div>
-      </details>
-      <details class="faq-item">
-        <summary>Do you place apprentices for us?</summary>
-        <div class="faq-answer">
-          No. We're not a staffing agency. We set up the program, run the compliance and reporting, and advise on selection and technical-school partnerships. The apprentices are your employees — recruiting and hiring stay with you.
-        </div>
-      </details>
-      <details class="faq-item">
-        <summary>How does this help with IRA / prevailing-wage work?</summary>
-        <div class="faq-answer">
-          Inflation Reduction Act-funded projects that meet prevailing-wage and apprenticeship requirements unlock significantly higher tax credits. Davis-Bacon jobs require certified payroll and may require apprenticeship participation. Having a registered program makes you eligible — and provides the documentation to claim those bonuses cleanly.
-        </div>
-      </details>
-      <details class="faq-item">
-        <summary>What's a "design partner" cohort?</summary>
-        <div class="faq-answer">
-          We work with 3-5 trades companies at a time during this early phase. They get materially reduced fees in exchange for working with us to shape the product around how their businesses actually operate. We're not trying to onboard hundreds of clients — we're doing this work well for a small number of partners.
-        </div>
-      </details>
-      <details class="faq-item">
-        <summary>What states do you operate in?</summary>
-        <div class="faq-answer">
-          Colorado and Texas today. We chose these states deliberately — Colorado has an active State Apprenticeship Agency with established processes, and Texas has the federal Office of Apprenticeship pathway plus the largest industrial construction demand in the country right now. We'll expand as we find the right design partners elsewhere.
-        </div>
-      </details>
-    </div>
-  </div>
-</div>
-
-<!-- Big CTA -->
-<div class="big-cta" id="contact">
-  <div class="container">
-    <h2>Ready to talk?</h2>
-    <p>
-      A 20-minute call. We tell you whether this makes sense for your business
-      and whether we're the right partner. No deck, no sales pitch.
-    </p>
-    <div class="big-cta-row">
-      <a href="https://calendar.app.google/JotXeTxZUJ6oMdpT9" target="_blank" rel="noopener" class="btn btn-large">Book a Time</a>
-      <a href="tel:+16092487950" class="btn btn-outline btn-large">Call (609) 248-7950</a>
-      <a href="mailto:hello@withaudacity.com" class="btn btn-outline btn-large">Email Us</a>
-    </div>
-  </div>
-</div>
-
-<!-- Footer -->
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-col">
-        <a href="#" class="brand" style="margin-bottom: 12px;">
-          <span class="brand-mark">A</span>
-          <span class="brand-name">
-            <span class="brand-name-main">Audacity</span>
-            <span class="brand-name-sub">Apprenticeships</span>
-          </span>
-        </a>
-        <p style="margin-top: 12px;">DOL-registered apprenticeship programs for industrial trades businesses in Colorado and Texas.</p>
-      </div>
-      <div class="footer-col">
-        <h4>What we do</h4>
-        <a href="#service-design">Program Design</a>
-        <a href="#service-approval">DOL Approval</a>
-        <a href="#service-tracking">Apprentice Tracking</a>
-        <a href="#service-compliance">Compliance</a>
-      </div>
-      <div class="footer-col">
-        <h4>Company</h4>
-        <a href="#fit">Who it's for</a>
-        <a href="#process">How it works</a>
-        <a href="#contact">Contact</a>
-        <a href="mailto:hello@withaudacity.com">Email</a>
-      </div>
-      <div class="footer-col">
-        <h4>Coverage</h4>
-        <p>Colorado<br>Texas</p>
-        <h4 style="margin-top:16px;">Hours</h4>
-        <p>Mon-Fri, 8am-5pm MT</p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 Audacity Apprenticeships</span>
-      <span>withaudacity.com · hello@withaudacity.com</span>
+    <div class="foot-right">
+      <button class="btn-primary" data-modal-open>Book a demo</button>
+      <span class="mono">© 2026 Audacity</span>
     </div>
   </div>
 </footer>
 
+<div class="modal-overlay" id="modal" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" data-modal-close aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="modal-body">
+      <div class="mono modal-kicker">Book a demo</div>
+      <h3 class="modal-title" id="modal-title">Schedule a time with us</h3>
+      <p class="modal-sub">Tell us about your business. We'll respond within 48 hours.</p>
+      <form class="modal-form" id="demo-form">
+        <label class="field"><span class="mono field-label">Your name</span><input type="text" name="firstName" autocomplete="name" required></label>
+        <label class="field"><span class="mono field-label">Company</span><input type="text" name="company" autocomplete="organization" required></label>
+        <label class="field"><span class="mono field-label">Email</span><input type="email" name="email" autocomplete="email" required></label>
+        <label class="field"><span class="mono field-label">Phone</span><input type="tel" name="phone" autocomplete="tel" placeholder="(303) 000-0000"></label>
+        <label class="field"><span class="mono field-label">State</span>
+          <select name="state" required>
+            <option value="" disabled selected>Select</option>
+            <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option><option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option><option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option>
+          </select>
+        </label>
+        <button type="submit" class="modal-submit">Book a Time
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <p class="modal-fine">We'll respond within 48 hours.</p>
+      </form>
+      <div class="modal-success" id="modal-success" hidden>
+        <div class="success-check"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <p>Thanks. We'll be in touch within 48 hours.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-  const form = document.getElementById('hero-form');
-  const success = document.getElementById('hero-success');
-  const submitBtn = form.querySelector('button[type="submit"]');
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const data = Object.fromEntries(new FormData(form));
-    const originalText = submitBtn.textContent;
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Sending…';
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) throw new Error('Request failed');
-      form.style.display = 'none';
-      success.classList.add('show');
-    } catch (err) {
-      submitBtn.disabled = false;
-      submitBtn.textContent = originalText;
-      alert("Sorry — something went wrong sending your message. Please email hello@withaudacity.com or call (609) 248-7950.");
+(function(){
+  "use strict";
+  var runhead = document.getElementById('runhead');
+  window.addEventListener('scroll', function(){
+    if (window.scrollY > 6) runhead.classList.add('scrolled'); else runhead.classList.remove('scrolled');
+  }, {passive:true});
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var stack = document.getElementById('stack');
+  var countEl = document.getElementById('count');
+  var procEl = document.getElementById('proc-total');
+  var processed = 247;
+  procEl.textContent = processed;
+
+  // ---- task inbox (human approvals kicked back from the stream) ----
+  var inboxEl = document.getElementById('inbox');
+  var inboxCountEl = document.getElementById('inbox-count');
+  var inboxItems = [];
+  var ARROW = '<svg viewBox="0 0 16 16" fill="none"><path d="M3 8h9M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function inboxRefresh(){ inboxCountEl.textContent = inboxItems.length; }
+  function inboxAdd(task, animate){
+    if (!task) return;
+    // cap at 3 visible; drop oldest
+    while (inboxItems.length >= 3){
+      var old = inboxItems.shift();
+      if (old.parentNode){ old.classList.add('leaving'); (function(n){ setTimeout(function(){ if(n.parentNode) n.parentNode.removeChild(n); },500); })(old); }
+    }
+    var el = document.createElement('div');
+    el.className = 'inbox-item' + (animate ? ' entering' : '');
+    el.innerHTML =
+      '<div class="it-label">'+task.label+'</div>'+
+      '<div class="it-sub">'+task.sub+'</div>'+
+      '<div class="it-action">'+task.action+' '+ARROW+'</div>';
+    inboxEl.appendChild(el);
+    if (animate) setTimeout(function(){ el.classList.remove('entering'); }, 460);
+    inboxItems.push(el);
+    inboxRefresh();
+  }
+  function inboxResolveOldest(){
+    if (!inboxItems.length) return;
+    var el = inboxItems.shift();
+    if (el.parentNode){ el.classList.add('leaving'); (function(n){ setTimeout(function(){ if(n.parentNode) n.parentNode.removeChild(n); },500); })(el); }
+    inboxRefresh();
+  }
+
+  var CHECK = '<svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5l3 3 6-6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  // 5 meaningful transitions per the brief. status drives the footer chip.
+  var FLOWS = [
+    { id:'WF-01·4471', subject:'D. Okafor', source:['ELECTRICAL','STEP 3→4'], ref:'ETA-671',
+      inbox:{label:'Approve wage step', sub:'D. Okafor', action:'Approve'},
+      steps:[
+        {l:'Payroll synced'},
+        {l:'Eligible for Step 4'},
+        {l:'Preparing packet', status:'processing'},
+        {l:'Ready for approval', status:'review'},
+        {l:'Completed', status:'completed'} ] },
+    { id:'WF-03·1188', subject:'State expansion fund', source:['GRANT','CLOSES 18D'], ref:'G-2026',
+      inbox:{label:'Download grant application', sub:'State fund', action:'Download'},
+      steps:[
+        {l:'Opportunity detected'},
+        {l:'Program record pulled'},
+        {l:'Drafting application', status:'processing'},
+        {l:'Ready for review', status:'review'},
+        {l:'Ready to send', status:'completed'} ] },
+    { id:'WF-04·0925', subject:'Work opportunity credit', source:['TAX CREDIT','4 HIRES'], ref:'WOTC',
+      inbox:{label:'Forward tax-credit claim', sub:'to accountant', action:'Forward'},
+      steps:[
+        {l:'Hires matched to credit'},
+        {l:'Wages qualified'},
+        {l:'Generating claim', status:'processing'},
+        {l:'Ready to file', status:'review'},
+        {l:'Filed', status:'completed'} ] },
+    { id:'WF-02·3310', subject:'Q2 quarterly audit', source:['AUDIT','14 APPR.'], ref:'AUD-Q2',
+      steps:[
+        {l:'Audit window opened'},
+        {l:'Records required'},
+        {l:'Collecting payroll', status:'processing'},
+        {l:'Packet ready for review', status:'review'},
+        {l:'Filed', status:'completed'} ] },
+    { id:'WF-05·0640', subject:'Annual program report', source:['COMPLIANCE','RAPIDS'], ref:'RPT-AN',
+      steps:[
+        {l:'Reporting period closed'},
+        {l:'Program data complete'},
+        {l:'Assembling report', status:'processing'},
+        {l:'Ready for review', status:'review'},
+        {l:'Submitted', status:'completed'} ] },
+    { id:'WF-01·5092', subject:'M. Reyes', source:['PLUMBING','STEP 2→3'], ref:'ETA-671',
+      inbox:{label:'Approve wage step', sub:'M. Reyes', action:'Approve'},
+      steps:[
+        {l:'Evaluation recorded'},
+        {l:'Eligible for Step 3'},
+        {l:'Preparing packet', status:'processing'},
+        {l:'Ready for approval', status:'review'},
+        {l:'Completed', status:'completed'} ] }
+  ];
+
+  var STATE_LABEL = { processing:'Processing', review:'Ready for review', approved:'Approved', completed:'Completed' };
+  function stepStatus(flow, i){ var s = flow.steps[i] && flow.steps[i].status; return s || 'detected'; }
+
+  var cursor = 0;
+  function nextFlow(){ var f = FLOWS[cursor % FLOWS.length]; cursor++; return f; }
+
+  // ---- ACTIVE ----
+  function buildActive(flow){
+    var el = document.createElement('div');
+    el.className = 'wf active entering';
+    var stepsHTML = flow.steps.map(function(s,i){
+      return '<div class="step pending" data-i="'+i+'">'+
+        '<div class="node">'+CHECK+'</div>'+
+        '<div class="step-label">'+s.l+'</div></div>';
+    }).join('');
+    el.innerHTML =
+      '<div class="wf-head">'+
+        '<div class="wf-id">'+flow.id+'</div>'+
+        '<div class="wf-headmain">'+
+          '<div class="wf-subject">'+flow.subject+'</div>'+
+          '<div class="wf-source"><span>'+flow.source[0]+'</span><span class="sep">/</span><span>'+flow.source[1]+'</span></div>'+
+        '</div>'+
+        '<div class="wf-time">now</div>'+
+      '</div>'+
+      '<div class="chain">'+stepsHTML+'</div>'+
+      '<div class="wf-foot"><span class="status" data-s="processing"><span class="pip"></span>Working</span><span class="ref">'+flow.ref+'</span></div>';
+    return el;
+  }
+  function setActiveStep(el, flow, idx){
+    el.querySelectorAll('.step').forEach(function(n,i){
+      n.classList.remove('pending','current','done');
+      if (i<idx) n.classList.add('done'); else if (i===idx) n.classList.add('current'); else n.classList.add('pending');
+    });
+    var st = stepStatus(flow, idx);
+    var foot = el.querySelector('.status');
+    if (st === 'completed'){
+      foot.setAttribute('data-s','completed');
+      foot.innerHTML = '<svg class="check" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Completed';
+    } else {
+      var key = (st==='detected')?'processing':st;
+      foot.setAttribute('data-s', key);
+      foot.innerHTML = '<span class="pip"></span>'+(STATE_LABEL[st]||'Working');
+    }
+  }
+
+  // ---- MINI ----
+  function buildMini(flow, at){
+    var el = document.createElement('div');
+    el.className = 'wf mini entering';
+    var total = flow.steps.length;
+    var st = stepStatus(flow, at);
+    var label = (st==='completed')?'Completed':(STATE_LABEL[st]||'Processing');
+    var segs=''; for (var i=0;i<total;i++){ var c=i<at?'done':(i===at?'on':''); segs+='<div class="seg '+c+'"><div class="fill"></div></div>'; }
+    el.innerHTML =
+      '<div class="wf-mini-row">'+
+        '<div class="wf-mini-id">'+flow.id+'</div>'+
+        '<div class="wf-mini-body"><div class="wf-mini-title">'+flow.subject+'</div></div>'+
+        '<div class="wf-mini-state">'+label+'</div>'+
+      '</div>'+
+      '<div class="wf-mini-rail">'+segs+'</div>';
+    return el;
+  }
+  function advanceMini(el, flow, at){
+    var st = stepStatus(flow, at);
+    var label = (st==='completed')?'Completed':(STATE_LABEL[st]||'Processing');
+    el.querySelector('.wf-mini-state').textContent = label;
+    el.querySelectorAll('.wf-mini-rail .seg').forEach(function(seg,i){
+      seg.classList.remove('on','done');
+      if (i<at) seg.classList.add('done'); else if (i===at) seg.classList.add('on');
+    });
+  }
+
+  // ---- orchestration ----
+  var activeEl=null, activeFlow=null, activeIdx=0, miniPool=[];
+  function refreshCount(){ countEl.textContent = (activeEl?1:0) + miniPool.length; }
+  function bumpProcessed(){ processed++; procEl.textContent = processed; }
+
+  function settleActive(onDone){
+    var ms = reduce?0:1500;
+    var firedInbox = false;
+    function tick(){
+      setActiveStep(activeEl, activeFlow, activeIdx);
+      // when this workflow reaches "ready for review/approval", kick a task to the inbox
+      if (!firedInbox && activeFlow.inbox && stepStatus(activeFlow, activeIdx) === 'review'){
+        firedInbox = true;
+        inboxAdd(activeFlow.inbox, true);
+      }
+      if (activeIdx >= activeFlow.steps.length-1){
+        bumpProcessed();
+        setTimeout(function(){ retireActive(onDone); }, reduce?0:2400);
+        return;
+      }
+      activeIdx++; setTimeout(tick, ms);
+    }
+    tick();
+  }
+  function retireActive(onDone){
+    if(!activeEl){ if(onDone)onDone(); return; }
+    var old=activeEl;
+    old.classList.remove('active');
+    old.style.borderLeft='none'; old.style.paddingLeft='0';
+    old.classList.add('leaving');
+    setTimeout(function(){ if(old.parentNode) old.parentNode.removeChild(old); }, 420);
+    activeEl=null; if(onDone)onDone();
+  }
+  function promoteNext(){
+    var flow, startIdx=0;
+    if (miniPool.length){
+      miniPool.sort(function(a,b){ return b.idx-a.idx; });
+      var chosen = miniPool.shift();
+      if (chosen.timer) clearInterval(chosen.timer);
+      if (chosen.el.parentNode){ chosen.el.classList.add('leaving'); var ce=chosen.el; setTimeout(function(){ if(ce.parentNode) ce.parentNode.removeChild(ce); }, 600); }
+      flow = chosen.flow; startIdx = Math.max(0, chosen.idx-1);
+    } else { flow = nextFlow(); }
+    activeFlow=flow; activeIdx=startIdx; activeEl=buildActive(flow);
+    stack.insertBefore(activeEl, stack.firstChild);
+    setTimeout(function(){ activeEl.classList.remove('entering'); }, 550);
+    setActiveStep(activeEl, flow, startIdx);
+    topUpMinis(); refreshCount();
+    settleActive(function(){ topUpMinis(); refreshCount(); promoteNext(); });
+  }
+  function spawnMini(){
+    var flow=nextFlow(), idx=1, el=buildMini(flow, idx);
+    stack.appendChild(el);
+    setTimeout(function(){ el.classList.remove('entering'); }, 550);
+    var rec={el:el, flow:flow, idx:idx};
+    miniPool.push(rec);
+    rec.timer = setInterval(function(){
+      if(!rec.el.isConnected){ clearInterval(rec.timer); return; }
+      if (rec.idx < rec.flow.steps.length-1){ rec.idx++; advanceMini(rec.el, rec.flow, rec.idx); }
+      else clearInterval(rec.timer);
+    }, reduce?100000:(3400+Math.random()*2200));
+  }
+  function topUpMinis(){
+    miniPool = miniPool.filter(function(r){ return r.el.isConnected; });
+    while (miniPool.length < 2) spawnMini();
+  }
+
+  // ---- COLD OPEN (plays once, then settles) ----
+  function coldOpen(){
+    // seed the ledger first so the panel reads as already-running, never empty
+    spawnMini(); spawnMini();
+    refreshCount();
+
+    var line = document.createElement('div');
+    line.className='wf active entering'; line.style.padding='16px 0 16px 14px';
+    line.innerHTML =
+      '<div class="wf-head">'+
+        '<div class="wf-id">SCAN</div>'+
+        '<div class="wf-headmain"><div class="wf-subject" id="co-sub">New payroll imported</div>'+
+        '<div class="wf-source" id="co-src"><span>SCANNING PROGRAM ACTIVITY</span></div></div>'+
+        '<div class="wf-time">now</div></div>';
+    stack.insertBefore(line, stack.firstChild);
+    setTimeout(function(){ line.classList.remove('entering'); }, 350);
+    // count the scan as an active workflow so the header never shows 0 active
+    countEl.textContent = miniPool.length + 1;
+
+    var seq = [
+      ['New payroll imported','SOURCE / PAYROLL SYSTEM'],
+      ['17 apprentices updated','RECALCULATING HOURS · MILESTONES'],
+      ['3 wage progressions detected','2 GRANTS · 1 AUDIT WINDOW FLAGGED'],
+      ['Preparing documentation','DRAFTING FORMS · PULLING RECORDS']
+    ];
+    var i=0;
+    function step(){
+      if (i>=seq.length){
+        line.classList.remove('active');
+        line.style.borderLeft='none'; line.style.paddingLeft='0';
+        line.classList.add('leaving');
+        setTimeout(function(){ if(line.parentNode) line.parentNode.removeChild(line); }, 420);
+        setTimeout(startSteady, 260); return;
+      }
+      document.getElementById('co-sub').textContent = seq[i][0];
+      document.getElementById('co-src').innerHTML = '<span>'+seq[i][1]+'</span>';
+      i++; setTimeout(step, 1200);
+    }
+    setTimeout(step, 500);
+  }
+  function startSteady(){ topUpMinis(); promoteNext(); }
+
+  // seed inbox so it reads populated immediately (3 waiting)
+  inboxAdd({label:'Approve wage step', sub:'D. Okafor', action:'Approve'}, false);
+  inboxAdd({label:'Download grant application', sub:'State fund', action:'Download'}, false);
+  inboxAdd({label:'Forward tax-credit claim', sub:'to accountant', action:'Forward'}, false);
+  // one task resolves periodically so the inbox breathes without churn
+  if (!reduce){
+    setInterval(function(){ if (inboxItems.length > 1) inboxResolveOldest(); }, 16000);
+  }
+
+  // boot
+  if (reduce){
+    activeFlow=nextFlow(); activeEl=buildActive(activeFlow); activeEl.classList.remove('entering');
+    stack.appendChild(activeEl); setActiveStep(activeEl, activeFlow, 3);
+    spawnMini(); spawnMini(); spawnMini(); refreshCount();
+  } else {
+    coldOpen();
+  }
+})();
+
+// Book-a-demo modal
+(function(){
+  var modal = document.getElementById('modal');
+  if (!modal) return;
+  var dialog = modal.querySelector('.modal-dialog');
+  var form = document.getElementById('demo-form');
+  var success = document.getElementById('modal-success');
+  var lastFocus = null;
+
+  function openModal(trigger){
+    lastFocus = trigger || document.activeElement;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    // reset to form view each open
+    if (form) form.hidden = false;
+    if (success) success.hidden = true;
+    var first = modal.querySelector('input, select, button.modal-submit');
+    setTimeout(function(){ if (first) first.focus(); }, 60);
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  document.querySelectorAll('[data-modal-open]').forEach(function(btn){
+    btn.addEventListener('click', function(e){ e.preventDefault(); openModal(btn); });
+  });
+  modal.querySelectorAll('[data-modal-close]').forEach(function(btn){
+    btn.addEventListener('click', closeModal);
+  });
+  modal.addEventListener('click', function(e){ if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    // focus trap
+    if (e.key === 'Tab' && modal.classList.contains('open')){
+      var f = modal.querySelectorAll('button, input, select, a[href]');
+      f = Array.prototype.filter.call(f, function(el){ return el.offsetParent !== null; });
+      if (!f.length) return;
+      var first = f[0], last = f[f.length-1];
+      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
     }
   });
+
+  if (form){
+    var submitBtn = form.querySelector('button[type="submit"]');
+    form.addEventListener('submit', async function(e){
+      e.preventDefault();
+      var data = Object.fromEntries(new FormData(form));
+      var originalHtml = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+      try {
+        var res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        if (!res.ok) throw new Error('Request failed');
+        form.hidden = true;
+        success.hidden = false;
+      } catch (err) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalHtml;
+        alert("Sorry — something went wrong sending your message. Please email hello@withaudacity.com or call (609) 248-7950.");
+      }
+    });
+  }
+})();
 </script>
 
 </body>
