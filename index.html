@@ -611,11 +611,6 @@
     .builtfor { grid-template-columns: 1fr; }
     .bf-col { border-right: none; border-bottom: 1px solid var(--rule); padding: 30px 22px 34px; }
     .bf-col:last-child { border-bottom: none; }
-    .sc-row { grid-template-columns: 1fr; gap: 32px; padding: 56px 0; }
-    .sc-row.flip .sc-text { order: 1; }
-    .sc-row.flip .sc-visual { order: 2; }
-    .sc-row.flip .art { margin-left: 0; }
-    .showcase { padding: 64px 0 72px; }
     .closer { padding: 80px 0 88px; }
     .faq { padding: 70px 0 80px; }
     .faq-q { font-size: 18px; }
@@ -815,8 +810,13 @@
   @media (max-width: 520px) {
     .modal-dialog { padding: 28px 22px; }
   }
-  /* Mobile: artifact cards sit fully inside the frame instead of bleeding off the right edge */
+  /* Mobile: stack showcase rows (text above card) and keep the artifact card fully inside its frame */
   @media (max-width: 940px) {
+    .showcase { padding: 64px 0 72px; }
+    .sc-row { grid-template-columns: 1fr; gap: 32px; padding: 56px 0; }
+    .sc-row.flip .sc-text { order: 1; }
+    .sc-row.flip .sc-visual { order: 2; }
+    .sc-row.flip .art { margin-left: 0; }
     .art { width: 100%; border-radius: 10px; }
     .art-frame { padding: 22px; }
     .art-strip { flex-wrap: wrap; }
