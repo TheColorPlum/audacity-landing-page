@@ -614,7 +614,6 @@
     .sc-row { grid-template-columns: 1fr; gap: 32px; padding: 56px 0; }
     .sc-row.flip .sc-text { order: 1; }
     .sc-row.flip .sc-visual { order: 2; }
-    .art { width: 100%; }
     .sc-row.flip .art { margin-left: 0; }
     .showcase { padding: 64px 0 72px; }
     .closer { padding: 80px 0 88px; }
@@ -816,6 +815,12 @@
   @media (max-width: 520px) {
     .modal-dialog { padding: 28px 22px; }
   }
+  /* Mobile: artifact cards sit fully inside the frame instead of bleeding off the right edge */
+  @media (max-width: 940px) {
+    .art { width: 100%; border-radius: 10px; }
+    .art-frame { padding: 22px; }
+    .art-strip { flex-wrap: wrap; }
+  }
 
 </style>
 </head>
@@ -906,24 +911,24 @@
     <div class="sec-head-row">
       <div class="sec-index">01 / How it works</div>
       <div>
-        <h2 class="sec-head">As your business runs, <em>Audacity keeps the program moving.</em></h2>
-        <p class="sec-lede">You don't have to start the work or remember when it's due. Audacity watches what's happening in the program, recognizes what needs to happen next, and prepares the documents before the deadline arrives. The paperwork is ready when you are.</p>
+        <h2 class="sec-head">As your business runs, <em>agents keep the program moving.</em></h2>
+        <p class="sec-lede">You don't have to start the work or remember when it's due. Agents watch what's happening in the program, recognize what needs to happen next, and prepare the documents before the deadline arrives. The paperwork is ready when you are.</p>
       </div>
     </div>
     <div class="process">
       <div class="proc">
         <div class="proc-num">01 / Watch</div>
-        <h3>It catches what would otherwise live in someone's head</h3>
+        <h3>Agents catch what would otherwise live in someone's head</h3>
         <p>Hours, milestones, wage steps, reporting windows, and deadlines change constantly. Audacity tracks them as they happen, so nothing waits on someone remembering it first.</p>
       </div>
       <div class="proc">
         <div class="proc-num">02 / Decide</div>
-        <h3>It knows what needs to happen next</h3>
+        <h3>Agents know what needs to happen next</h3>
         <p>An apprentice becomes eligible for a raise. An audit window opens. A grant deadline approaches. Audacity recognizes the trigger and starts the right workflow on its own.</p>
       </div>
       <div class="proc">
         <div class="proc-num">03 / Execute</div>
-        <h3>It brings back finished work</h3>
+        <h3>Agents bring back finished work</h3>
         <p>Records pulled, forms prepared, packets assembled, filings drafted. The work shows up ready for review, not as another task on your list.</p>
       </div>
     </div>
@@ -937,7 +942,7 @@
       <div class="sec-index">02 / What Audacity handles</div>
       <div>
         <h2 class="sec-head">The complex parts of running a program, <em>handled in the background.</em></h2>
-        <p class="sec-lede">These are the recurring operational jobs that usually require someone to track dates, chase records, fill forms, and keep the program defensible. Audacity keeps them moving as part of the system.</p>
+        <p class="sec-lede">These are the recurring operational jobs that usually require someone to track dates, chase records, fill forms, and keep the program defensible. Agents keep them moving as part of the system.</p>
       </div>
     </div>
 
@@ -946,7 +951,7 @@
       <div class="sc-text">
         <div class="sc-eyebrow">Wage Steps</div>
         <h3 class="sc-title">Moves apprentices to the next wage step</h3>
-        <p class="sc-body">It tracks hours and competencies against each step. The moment an apprentice qualifies, it documents the progression and routes it for approval.</p>
+        <p class="sc-body">Agents track hours and competencies against each step. The moment an apprentice qualifies, Audacity documents the progression and routes it for approval.</p>
       </div>
       <div class="sc-visual">
         <div class="art-frame">
@@ -974,7 +979,7 @@
       <div class="sc-text">
         <div class="sc-eyebrow">Audit Packages</div>
         <h3 class="sc-title">Builds the audit package before the window opens</h3>
-        <p class="sc-body">It gathers payroll records, agreements, and evidence ahead of time, so the audit is a review instead of a scramble.</p>
+        <p class="sc-body">Agents gather payroll records, agreements, and evidence ahead of time, so the audit is a review instead of a scramble.</p>
       </div>
       <div class="sc-visual">
         <div class="art-frame">
@@ -998,7 +1003,7 @@
       <div class="sc-text">
         <div class="sc-eyebrow">Grant Applications</div>
         <h3 class="sc-title">Drafts grant applications as funding opens</h3>
-        <p class="sc-body">It flags opportunities the moment they appear and prepares the application from your existing program record.</p>
+        <p class="sc-body">The platform flags opportunities the moment they appear and agents prepare the application from your existing program record.</p>
       </div>
       <div class="sc-visual">
         <div class="art-frame">
@@ -1022,7 +1027,7 @@
       <div class="sc-text">
         <div class="sc-eyebrow">Tax Credits</div>
         <h3 class="sc-title">Files the tax-credit claims you're owed</h3>
-        <p class="sc-body">It matches qualifying wages and hours to available credits and prepares the claim for filing.</p>
+        <p class="sc-body">The platform matches qualifying wages and hours to available credits and agents prepare the claim for filing.</p>
       </div>
       <div class="sc-visual">
         <div class="art-frame">
@@ -1051,7 +1056,7 @@
       <div class="sc-text">
         <div class="sc-eyebrow">Compliance</div>
         <h3 class="sc-title">Keeps the program compliant and reporting on time</h3>
-        <p class="sc-body">It assembles the required reports from live program data and keeps deadlines from becoming last-minute fire drills.</p>
+        <p class="sc-body">Agents assemble the required reports from live program data and keep deadlines from becoming last-minute fire drills.</p>
       </div>
       <div class="sc-visual">
         <div class="art-frame">
@@ -1073,8 +1078,8 @@
     <div class="sc-row flip">
       <div class="sc-text">
         <div class="sc-eyebrow">Program Record</div>
-        <h3 class="sc-title">Keeps the whole program defensible</h3>
-        <p class="sc-body">It connects every progression, filing, and approval, so the program's full history stays current and ready for anyone who asks.</p>
+        <h3 class="sc-title">Maintains the full history of the program</h3>
+        <p class="sc-body">Audacity connects every progression, filing, and approval, so the program's full history stays current and ready for anyone who asks.</p>
       </div>
       <div class="sc-visual">
         <div class="art-frame">
